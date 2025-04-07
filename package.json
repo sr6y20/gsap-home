@@ -19,7 +19,8 @@
     "pinia": "^2.1.7",
     "three": "^0.175.0",
     "vue": "^3.4.29",
-    "vue-router": "^4.3.3"
+    "vue-router": "^4.3.3",
+    "vuetify": "^3.8.0"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
