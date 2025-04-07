@@ -14,12 +14,14 @@
     "gsap": "^3.12.7",
     "html2canvas": "^1.4.1",
     "pinia": "^2.1.7",
+    "three": "^0.175.0",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^20.14.5",
+    "@types/three": "^0.175.0",
     "@vitejs/plugin-vue": "^5.0.5",
     "@vitejs/plugin-vue-jsx": "^4.0.0",
     "@vue/tsconfig": "^0.5.1",

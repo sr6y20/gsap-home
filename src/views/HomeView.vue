@@ -2,11 +2,13 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
-import html2canvas from 'html2canvas'
+import html2canvas from 'html2canvas';
 import { onBeforeUnmount, onMounted, ref, useTemplateRef } from "vue";
 import '../assets/three.min.js';
-import '../assets/vanta.fog.min.js'
-import '../assets/imagesloaded.pkgd.min.js'
+import '../assets/OrbitControls.js';
+import '../assets/GLTFLoader.js';
+import '../assets/vanta.fog.min.js';
+import '../assets/imagesloaded.pkgd.min.js';
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(MotionPathPlugin);
@@ -227,12 +229,81 @@ const contentScreen = () => {
   });
 }
 
+const foxInit = () => {
+  const scene = new THREE.Scene();
+  scene.background = null; // 设置为透明背景
+
+  const camera = new THREE.PerspectiveCamera(75, 300 / 300, 0.1, 1000);
+  camera.position.set(2, 1.5, 3);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true }); // 启用 alpha
+  renderer.setSize(300, 300); // 设置固定大小
+  document.querySelector('.fox-wrapper').appendChild(renderer.domElement);
+
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.target.set(0, 1, 0);
+  controls.update();
+
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+  scene.add(ambientLight);
+
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+  directionalLight.position.set(5, 10, 7.5);
+  scene.add(directionalLight);
+
+  let mixer;
+
+  const loader = new THREE.GLTFLoader();
+  loader.load(
+    '/Fox.gltf',
+    function (gltf) {
+      const model = gltf.scene;
+      model.scale.set(0.023, 0.023, 0.023);
+      scene.add(model);
+
+      mixer = new THREE.AnimationMixer(model);
+      gltf.animations.forEach((clip) => {
+        mixer.clipAction(clip).play();
+      });
+    },
+    undefined,
+    function (error) {
+      console.error('加载模型出错:', error);
+    }
+  );
+
+  const clock = new THREE.Clock();
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    const delta = clock.getDelta();
+    if (mixer) mixer.update(delta);
+
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
+  let angle = 0; // 初始角度（弧度）
+  const radius = 3; // 半径（离模型距离）
+  const target = new THREE.Vector3(0, 1, 0); // 模型中心点
+
+  function rotateCameraTo(angleInRadians) {
+    angle = angleInRadians;
+    camera.position.x = target.x + radius * Math.sin(angle);
+    camera.position.z = target.z + radius * Math.cos(angle);
+    camera.lookAt(target); // 始终看向模型
+  }
+}
+
 onMounted(() => {
   vantaInit();
 
   headScreen();
   contentScreen();
   fishPathInit();
+  foxInit()
 
   window.addEventListener('scroll', handleScroll);
 })
@@ -268,6 +339,8 @@ onBeforeUnmount(() => {
       </div>
     </div>
   </div>
+
+  <div class="fox-wrapper"></div>
 
   <div class="description">
     <div id="capture">
@@ -394,7 +467,6 @@ onBeforeUnmount(() => {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: -1;
 }
 
 .fish-wrapper {
@@ -571,6 +643,14 @@ onBeforeUnmount(() => {
     }
 
   }
+}
+
+.fox-wrapper {
+  width: 300px;
+  height: 300px;
+  position: fixed;
+  top: 0;
+  z-index: 888;
 }
 
 .content {
