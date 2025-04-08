@@ -3,7 +3,6 @@
  *
  * Bootstraps Vuetify and other plugins then mounts the App`
  */
-import './assets/main.scss'
 
 // Plugins
 import { registerPlugins } from '@/plugins'
