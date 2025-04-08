@@ -2,7 +2,7 @@
 import html2canvas from 'html2canvas';
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import '@/assets/imagesloaded.pkgd.min.js';
+import '@/plugins/effect/imagesloaded.pkgd.min.js';
 
 gsap.registerPlugin(ScrollTrigger);
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import '@/assets/lenis.min.js';
+import '@/plugins/effect/lenis.min.js';
 
 declare let Lenis: any;
 gsap.registerPlugin(ScrollTrigger);
@@ -56,7 +56,7 @@ onMounted(() => {
                     <img src="https://cdn.prod.website-files.com/671752cd4027f01b1b8f1c7f/6717795b4d5ac529e7d3a562_osmo-parallax-layer-2.webp"
                         loading="eager" width="800" data-parallax-layer="2" alt="" class="parallax__layer-img">
                     <div data-parallax-layer="3" class="parallax__layer-title">
-                        <h2 class="parallax__title">Parallax</h2>
+                        <h2 class="parallax__title">SR6Y20</h2>
                     </div>
                     <img src="https://cdn.prod.website-files.com/671752cd4027f01b1b8f1c7f/6717795bb5aceca85011ad83_osmo-parallax-layer-1.webp"
                         loading="eager" width="800" data-parallax-layer="4" alt="" class="parallax__layer-img">

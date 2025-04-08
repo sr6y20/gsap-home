@@ -29,19 +29,19 @@ const foxInit = () => {
 
     const loader = new GLTFLoader();
     loader.load(
-        '/Fox.gltf',
-        function (gltf) {
+        '/gltf/Fox.gltf',
+        function (gltf: any) {
             const model = gltf.scene;
             model.scale.set(0.023, 0.023, 0.023);
             scene.add(model);
 
             mixer = new THREE.AnimationMixer(model);
-            gltf.animations.forEach((clip) => {
+            gltf.animations.forEach((clip: THREE.AnimationClip) => {
                 mixer!.clipAction(clip).play();
             });
         },
         undefined,
-        function (error) {
+        function (error: any) {
             console.error('加载模型出错:', error);
         }
     );
