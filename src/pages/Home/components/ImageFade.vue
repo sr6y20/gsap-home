@@ -23,7 +23,7 @@ const imageFaded = () => {
     const COUNT = 75;
     const REPEAT_COUNT = 3;
 
-    const capture = document.querySelector("#capture") as HTMLElement;
+    const projectCards = document.querySelector("#project-card") as HTMLElement;
 
     function createCanvases(captureEl: HTMLElement) {
         html2canvas(captureEl).then((canvas) => {
@@ -65,19 +65,19 @@ const imageFaded = () => {
                 let tl = gsap.timeline({
                     scrollTrigger: {
                         scrub: 1,
-                        start: () => 0,
-                        end: () => window.innerHeight * 2
+                        start: () => "+=800",
+                        end: () => "+=1200"
                     }
                 });
 
                 tl.to(clonedCanvas, {
-                    duration: 1,
+                    duration: 3,
                     rotate: randomRotationAngle,
                     translateX: 40 * Math.sin(randomAngle),
                     translateY: 40 * Math.cos(randomAngle),
                     opacity: 0,
                     delay: (i / dataList.length) * 2 + 0.1
-                });
+                }, "+1");
 
             });
         });
@@ -86,7 +86,7 @@ const imageFaded = () => {
     const images = gsap.utils.toArray("img");
 
     imagesLoaded(images).on("always", () => {
-        createCanvases(capture);
+        createCanvases(projectCards);
     });
 }
 
@@ -188,7 +188,6 @@ onMounted(() => {
             transform: translateX(-50%) translateY(-10%);
         }
     }
-
 
     .gradient-bg {
         width: 100vw;

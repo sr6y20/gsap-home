@@ -51,15 +51,15 @@ onMounted(() => {
             <div class="parallax__visuals">
                 <div class="parallax__black-line-overflow"></div>
                 <div data-parallax-layers class="parallax__layers">
-                    <img src="https://cdn.prod.website-files.com/671752cd4027f01b1b8f1c7f/6717795be09b462b2e8ebf71_osmo-parallax-layer-3.webp"
-                        loading="eager" width="800" data-parallax-layer="1" alt="" class="parallax__layer-img">
-                    <img src="https://cdn.prod.website-files.com/671752cd4027f01b1b8f1c7f/6717795b4d5ac529e7d3a562_osmo-parallax-layer-2.webp"
-                        loading="eager" width="800" data-parallax-layer="2" alt="" class="parallax__layer-img">
+                    <img src="/layer-1.png" loading="eager" width="800" data-parallax-layer="1" alt=""
+                        class="parallax__layer-img">
+                    <img src="/layer-2.png" loading="eager" width="800" data-parallax-layer="2" alt=""
+                        class="parallax__layer-img">
                     <div data-parallax-layer="3" class="parallax__layer-title">
                         <h2 class="parallax__title">SR6Y20</h2>
                     </div>
-                    <img src="https://cdn.prod.website-files.com/671752cd4027f01b1b8f1c7f/6717795bb5aceca85011ad83_osmo-parallax-layer-1.webp"
-                        loading="eager" width="800" data-parallax-layer="4" alt="" class="parallax__layer-img">
+                    <img src="/layer-3.png" loading="eager" width="800" data-parallax-layer="4" alt=""
+                        class="parallax__layer-img">
                 </div>
                 <div class="parallax__fade"></div>
             </div>

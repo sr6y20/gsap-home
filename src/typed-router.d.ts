@@ -24,5 +24,6 @@ declare module 'vue-router/auto-routes' {
     '/Home/components/ImageFade': RouteRecordInfo<'/Home/components/ImageFade', '/Home/components/ImageFade', Record<never, never>, Record<never, never>>,
     '/Home/components/NeonRoom': RouteRecordInfo<'/Home/components/NeonRoom', '/Home/components/NeonRoom', Record<never, never>, Record<never, never>>,
     '/Home/components/ParallaxPlot': RouteRecordInfo<'/Home/components/ParallaxPlot', '/Home/components/ParallaxPlot', Record<never, never>, Record<never, never>>,
+    '/Home/components/ProjectCard': RouteRecordInfo<'/Home/components/ProjectCard', '/Home/components/ProjectCard', Record<never, never>, Record<never, never>>,
   }
 }

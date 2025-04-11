@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import ParallaxPlot from '@/pages/Home/components/ParallaxPlot.vue';
+import ProjectCard from "@/pages/Home/components/ProjectCard.vue";
 import FoxGLTF from "@/pages/Home/components/FoxGLTF.vue";
 import ImageFade from "@/pages/Home/components/ImageFade.vue";
 import Fish from "@/pages/Home/components/Fish.vue";
@@ -32,11 +33,11 @@ onMounted(() => {
 
 <template>
   <ParallaxPlot />
+  <ProjectCard />
+  <!-- <Fish /> -->
+  <!-- <FoxGLTF /> -->
 
-  <Fish />
-  <FoxGLTF />
-
-  <ImageFade />
+  <!-- <ImageFade /> -->
 
   <div class="link-container">
 
@@ -140,7 +141,7 @@ onMounted(() => {
     </section>
   </div>
 
-  <NeonRoom />
+  <!-- <NeonRoom /> -->
 </template>
 
 <style lang="scss" scoped>
