@@ -8,11 +8,12 @@ import FoxGLTF from "@/pages/Home/components/FoxGLTF.vue";
 import ImageFade from "@/pages/Home/components/ImageFade.vue";
 import Fish from "@/pages/Home/components/Fish.vue";
 import NeonRoom from "@/pages/Home/components/NeonRoom.vue";
+import Contact from "@/pages/Home/components/Contact.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const contentScreen = () => {
-  // 滚动左右切屏
+
   let sections = gsap.utils.toArray(".panel");
   gsap.to(sections, {
     xPercent: -100 * (sections.length - 1),
@@ -20,8 +21,9 @@ const contentScreen = () => {
     scrollTrigger: {
       trigger: ".link-container",
       pin: true,
-      scrub: 0.1,
-      end: "+=3000",
+      scrub: 0.3,
+      start: "top top",
+      end: "+=400"
     }
   });
 }
@@ -34,6 +36,7 @@ onMounted(() => {
 <template>
   <ParallaxPlot />
   <ProjectCard />
+
   <!-- <Fish /> -->
   <!-- <FoxGLTF /> -->
 
@@ -41,335 +44,231 @@ onMounted(() => {
 
   <div class="link-container">
 
-    <section class="panel blue">
-      <label class="box like">
-        <input type="checkbox">
-
-        <svg class="icon" width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd"
-            d="M9.77234 30.8573V11.7471H7.54573C5.50932 11.7471 3.85742 13.3931 3.85742 15.425V27.1794C3.85742 29.2112 5.50932 30.8573 7.54573 30.8573H9.77234ZM11.9902 30.8573V11.7054C14.9897 10.627 16.6942 7.8853 17.1055 3.33591C17.2666 1.55463 18.9633 0.814421 20.5803 1.59505C22.1847 2.36964 23.243 4.32583 23.243 6.93947C23.243 8.50265 23.0478 10.1054 22.6582 11.7471H29.7324C31.7739 11.7471 33.4289 13.402 33.4289 15.4435C33.4289 15.7416 33.3928 16.0386 33.3215 16.328L30.9883 25.7957C30.2558 28.7683 27.5894 30.8573 24.528 30.8573H11.9911H11.9902Z">
-          </path>
-        </svg>
-
-        <span></span>
-      </label>
-
-      <label class="box coin">
-        <input type="checkbox">
-
-        <svg class="icon" width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd"
-            d="M14.045 25.5454C7.69377 25.5454 2.54504 20.3967 2.54504 14.0454C2.54504 7.69413 7.69377 2.54541 14.045 2.54541C20.3963 2.54541 25.545 7.69413 25.545 14.0454C25.545 17.0954 24.3334 20.0205 22.1768 22.1771C20.0201 24.3338 17.095 25.5454 14.045 25.5454ZM9.66202 6.81624H18.2761C18.825 6.81624 19.27 7.22183 19.27 7.72216C19.27 8.22248 18.825 8.62807 18.2761 8.62807H14.95V10.2903C17.989 10.4444 20.3766 12.9487 20.3855 15.9916V17.1995C20.3854 17.6997 19.9799 18.1052 19.4796 18.1052C18.9793 18.1052 18.5738 17.6997 18.5737 17.1995V15.9916C18.5667 13.9478 16.9882 12.2535 14.95 12.1022V20.5574C14.95 21.0577 14.5444 21.4633 14.0441 21.4633C13.5437 21.4633 13.1382 21.0577 13.1382 20.5574V12.1022C11.1 12.2535 9.52148 13.9478 9.51448 15.9916V17.1995C9.5144 17.6997 9.10883 18.1052 8.60856 18.1052C8.1083 18.1052 7.70273 17.6997 7.70265 17.1995V15.9916C7.71158 12.9487 10.0992 10.4444 13.1382 10.2903V8.62807H9.66202C9.11309 8.62807 8.66809 8.22248 8.66809 7.72216C8.66809 7.22183 9.11309 6.81624 9.66202 6.81624Z">
-          </path>
-        </svg>
-
-        <span></span>
-      </label>
-
-      <label class="box collect">
-        <input type="checkbox">
-
-        <svg class="icon" width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd"
-            d="M19.80715 9.26152C18.7438 9.09915 17.7624 8.36846 17.3534 7.39421L15.4723 3.4972C14.8998 2.1982 13.1004 2.1982 12.4461 3.4972L10.6468 7.39421C10.1561 8.36846 9.25639 9.09915 8.19315 9.26152L3.94016 9.91102C2.63155 10.0734 2.05904 11.6972 3.04049 12.6714L6.23023 15.9189C6.96632 16.6496 7.29348 17.705 7.1299 18.7605L6.39381 23.307C6.14844 24.6872 7.62063 25.6614 8.84745 25.0119L12.4461 23.0634C13.4276 22.4951 14.6544 22.4951 15.6359 23.0634L19.2345 25.0119C20.4614 25.6614 21.8518 24.6872 21.6882 23.307L20.8703 18.7605C20.7051 17.705 21.0339 16.6496 21.77 15.9189L24.9597 12.6714C25.9412 11.6972 25.3687 10.0734 24.06 9.91102L19.8071 9.26152Z">
-          </path>
-        </svg>
-
-        <span></span>
-      </label>
-    </section>
-
     <section class="panel red">
-      <div>
-        <div class="box">
-
-          <div class="loader">
-            <span style="--i:0"></span>
-            <span style="--i:1"></span>
-            <span style="--i:2"></span>
-            <span style="--i:3"></span>
-            <span style="--i:4"></span>
-            <span style="--i:5"></span>
-            <span style="--i:6"></span>
-            <span style="--i:7"></span>
-          </div>
-        </div>
-
-        <svg width="0" height="0">
-          <!-- 滤镜 -->
-          <filter id="Gooey">
-            <!-- 高斯模糊滤镜 stdDeviation偏差值 -->
-            <feGaussianBlur stdDeviation="10" />
-
-            <!-- 颜色矩阵 -->
-            <feColorMatrix values="
-              1 0 0 0 0
-              0 1 0 0 0
-              0 0 1 0 0 
-              0 0 0 20 -10
-            " />
-          </filter>
-        </svg>
-      </div>
-    </section>
-
-    <section class="panel gray">
-      <div class="loader"></div>
+      <ul class="cards-container cards">
+        <li style="--i: 0;" data-name="Bulbasaur">
+          <input type="radio" id="item-1" name="gallery-item" checked>
+          <label for="item-1">
+            <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/bulbasaur-s.png">
+          </label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/bulbasaur-l.png">
+          <h2>Bulbasaur</h2>
+          <p>Bulbasaur is a grass/poison type Pokémon that evolves into Ivysaur. Bulbasaur is also one of the three
+            starter Pokémon in Red/Blue.</p>
+        </li>
+        <li style="--i: 1;" data-name="Charmander">
+          <input type="radio" id="item-2" name="gallery-item">
+          <label for="item-2"><img
+              src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/charmander-s.png"></label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/charmander-l.png"
+            loading="lazy">
+          <h2>Charmander</h2>
+          <p>Charmander is the fire-type starter Pokémon first seen in Pokémon Red/Blue. Charmander uses the power of
+            its fiery tail to attack the enemy and eventually evolves into Charmeleon.</p>
+        </li>
+        <li style="--i: 2;" data-name="Charmeleon">
+          <input type="radio" id="item-3" name="gallery-item">
+          <label for="item-3"><img
+              src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/charmeleon-s.png"></label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/charmeleon-l.png"
+            loading="lazy">
+          <h2>Charmeleon</h2>
+          <p>Charmeleon is a fire-type Pokémon first found in Pokémon Red/Blue. Charmander evolves from the fire-type
+            starter Pokémon Charmander and eventually into Charizard, all while using his awesome fiery powers.</p>
+        </li>
+        <li style="--i: 3;" data-name="Squirtle">
+          <input type="radio" id="item-4" name="gallery-item">
+          <label for="item-4"><img
+              src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/squirtle-s.png"></label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/squirtle-l.png"
+            loading="lazy">
+          <h2>Squirtle</h2>
+          <p>Squirtle is a Water-type starter Pokémon from the original Pokémon Red/Blue. With enough experience it can
+            evolve into a Wartortle.</p>
+        </li>
+        <li style="--i: 4;" data-name="Wigglytuff">
+          <input type="radio" id="item-5" name="gallery-item">
+          <label for="item-5"><img
+              src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/wigglytuff-s.png"></label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/wigglytuff-l.png"
+            loading="lazy">
+          <h2>Wigglytuff</h2>
+          <p>Wigglytuff is a normal/fairy type Pokémon that evolves from Jigglypuff with a Moon Stone. </p>
+        </li>
+        <li style="--i: 5;" data-name="Zubat">
+          <input type="radio" id="item-6" name="gallery-item">
+          <label for="item-6"><img
+              src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/zubat-s.png"></label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/zubat-l.png"
+            loading="lazy">
+          <h2>Zubat</h2>
+          <p>Zubat is a Poison/Flying type Pokémon that evolves into Golbat.</p>
+        </li>
+        <li style="--i: 6;" data-name="Sandslash">
+          <input type="radio" id="item-7" name="gallery-item">
+          <label for="item-7"><img
+              src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/sandslash-s.png"></label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/sandslash-l.png"
+            loading="lazy">
+          <h2>Sandslash</h2>
+          <p>Sandslash is a ground type Pokémon that evolves from Sandshrew.</p>
+        </li>
+        <li style="--i: 7;" data-name="Nidorina">
+          <input type="radio" id="item-8" name="gallery-item">
+          <label for="item-8"><img
+              src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/nidorina-s.png"></label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/nidorina-l.png"
+            loading="lazy">
+          <h2>Nidorina</h2>
+          <p>Nidorina is a poison type Pokémon that evolves from Nidoran (female) and can evolve into Nidoqueen with a
+            Moon Stone. </p>
+        </li>
+        <li style="--i: 8;" data-name="Vulpix">
+          <input type="radio" id="item-9" name="gallery-item">
+          <label for="item-9"><img
+              src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/vulpix-s.png"></label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/vulpix-l.png"
+            loading="lazy">
+          <h2>Vulpix</h2>
+          <p>Vulpix is a fire type Pokémon that evolves into Ninetales with a Fire Stone.</p>
+        </li>
+        <li style="--i: 9;" data-name="Gloom">
+          <input type="radio" id="item-10" name="gallery-item">
+          <label for="item-10"><img
+              src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/gloom-s.png"></label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/gloom-l.png"
+            loading="lazy">
+          <h2>Gloom</h2>
+          <p>Gloom is a Grass/Poison type Pokémon that evolves from Oddish and can evolve into Vileplume with a Leaf
+            Stone, or Bellossom with a Sun Stone.</p>
+        </li>
+        <li style="--i: 10;" data-name="Paras">
+          <input type="radio" id="item-11" name="gallery-item">
+          <label for="item-11"><img
+              src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/paras-s.png"></label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/paras-l.png"
+            loading="lazy">
+          <h2>Paras</h2>
+          <p>Paras is a Bug/Grass type Pokémon that evolves into Parasect. </p>
+        </li>
+        <li style="--i: 11;" data-name="Alakazam">
+          <input type="radio" id="item-12" name="gallery-item">
+          <label for="item-12"><img
+              src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/alakazam-s.png"></label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/alakazam-l.png"
+            loading="lazy">
+          <h2>Alakazam</h2>
+          <p>Alakazam is a psychic-type pokemon from the original Pokemon Red/Blue. As the evolution of Kadabra,
+            Alakazam is the third in a line of powerful spoon-bending psychics.</p>
+        </li>
+        <li style="--i: 12;" data-name="Poliwrath">
+          <input type="radio" id="item-13" name="gallery-item">
+          <label for="item-13"><img
+              src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/poliwrath-s.png"></label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/poliwrath-l.png"
+            loading="lazy">
+          <h2>Poliwrath</h2>
+          <p>Poliwrath is a water/fighting-type pokemon first found in the original Pokemon Red/Blue. Poliwrath is the
+            evolved form of Poliwag and Poliwhirl, and it loves to get up-close and personal, using its confusing belly
+            to misdirect opponents before it goes in for the final punch.</p>
+        </li>
+        <li style="--i: 13;" data-name="Mankey">
+          <input type="radio" id="item-14" name="gallery-item">
+          <label for="item-14"><img
+              src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/mankey-s.png"></label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/mankey-l.png"
+            loading="lazy">
+          <h2>Mankey</h2>
+          <p>Mankey is a fighting-type pokemon first featured in the original Pokemon Red/Blue. Mankey uses its dense
+            form to the fullest advantage, dodging nimbly as it strikes blows on its opponents.</p>
+        </li>
+        <li style="--i: 14;" data-name="Tentacruel">
+          <input type="radio" id="item-15" name="gallery-item">
+          <label for="item-15"><img
+              src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/tentacruel-s.png"></label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/tentacruel-l.png"
+            loading="lazy">
+          <h2>Tentacruel</h2>
+          <p>Tentacruel is a water/poison-type pokemon first found in the original Pokemon Red/Blue. Tentacruel is the
+            evolution of Tentacool, its spindly tentacles more numerous and more poisonous.</p>
+        </li>
+        <li style="--i: 15;" data-name="Farfetch'd">
+          <input type="radio" id="item-16" name="gallery-item">
+          <label for="item-16"><img
+              src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/farfetch_d-s.png"></label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/farfetch_d-l.png"
+            loading="lazy">
+          <h2>Farfetch'd</h2>
+          <p>Farfetch'd is a Normal/Flying type Pokémon. Farfetch'd is very protective of its leek, and can use the
+            vegetable to attack opponents, even as Farfetch'd moves out of harm's way.</p>
+        </li>
+        <li style="--i: 16;" data-name="Voltorb">
+          <input type="radio" id="item-17" name="gallery-item">
+          <label for="item-17"><img
+              src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/voltorb-s.png"></label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/voltorb-l.png"
+            loading="lazy">
+          <h2>Voltorb</h2>
+          <p>Voltorb is an electric-type pokemon first found in the original Pokemon Red/Blue. Voltorb is commonly
+            mistaken for a hidden pokeball, often to the detriment of the one who finds it.</p>
+        </li>
+        <li style="--i: 17;" data-name="Rhyhorn">
+          <input type="radio" id="item-18" name="gallery-item">
+          <label for="item-18"><img
+              src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/rhyhorn-s.png"></label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/rhyhorn-l.png"
+            loading="lazy">
+          <h2>Rhyhorn</h2>
+          <p>Rhyhorn is a ground/rock-type pokemon first found in the original Pokemon Red/Blue. Rhyhorn has a short
+            stocky body that it uses to full advantage by rushing opponents to hit them with his horn-adorned head. It
+            evolves into Rhydon when it reaches level 42. </p>
+        </li>
+        <li style="--i: 18;" data-name="Tangela">
+          <input type="radio" id="item-19" name="gallery-item">
+          <label for="item-19"><img
+              src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/tangela-s.png"></label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/tangela-l.png"
+            loading="lazy">
+          <h2>Tangela</h2>
+          <p>Tangela is a grass-type pokemon first found in the original Pokemon Red/Blue. Tangela uses vines growing
+            out of its body to obscure it so that only its eyes and feet can be seen. </p>
+        </li>
+        <li style="--i: 19;" data-name="Mr. Mime">
+          <input type="radio" id="item-20" name="gallery-item">
+          <label for="item-20"><img
+              src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/mr_mime-s.png"></label>
+          <img src="https://raw.githubusercontent.com/cbolson/assets/refs/heads/main/codepen/pokemon/mr_mime-l.png"
+            loading="lazy">
+          <h2>Mr. Mime</h2>
+          <p>Mr. Mime is a psychic-type pokemon from the original Pokemon Red/Blue. Like his name indicates, this
+            pokemon doesn't say much - but watch out! Mr. Mime can copy even the most deadly attack and use it as its
+            own. </p>
+        </li>
+      </ul>
     </section>
 
     <section class="panel purple">
-      <div class="road">
-        <div class="taxi">
-          <div class="light"></div>
 
-          <div class="top">
-            <b></b>
-            <i></i>
-          </div>
-        </div>
-
-
-        <div class="taxi">
-          <div class="light"></div>
-
-          <div class="top">
-            <b></b>
-            <i></i>
-          </div>
-        </div>
-      </div>
     </section>
   </div>
 
   <!-- <NeonRoom /> -->
+  <Contact />
 </template>
 
 <style lang="scss" scoped>
 .link-container {
-  width: 600%;
+  width: 200%;
   height: 100vh !important;
   display: flex;
   flex-wrap: nowrap;
+  position: relative;
 }
 
 .panel {
   font-weight: 300;
   height: 100vh;
   width: 100vw;
-}
-
-.panel.blue {
-  background-color: #2c7ad2;
-  background-image: linear-gradient(144.02deg, #00bae2 4.56%, #fec5fb 72.98%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .box {
-    /* 内部元素上下左右居中 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 200px;
-    height: 200px;
-    /* 50% 的圆角就是 ○ */
-    border-radius: 50%;
-    /* 鼠标放上去是小手 */
-    cursor: pointer;
-
-    position: relative;
-  }
-
-  .box .icon {
-    width: 150px;
-    height: 150px;
-
-    /* svg 的填充颜色 */
-    fill: #ddd;
-    /* svg 的描边线宽 */
-    stroke-width: 1;
-    /* svg 的描边颜色 */
-    stroke: var(--color);
-    /* svg 的描边线框样式 */
-    stroke-dasharray: 100;
-    /* svg 的描边偏移量，也就是描边开始到结束的距离 */
-    stroke-dashoffset: 100;
-    /* svg 的描边两头的形状，是圆的 */
-    stroke-linecap: round;
-
-    z-index: 10;
-  }
-
-  .box span,
-  .box span::before {
-    width: 20px;
-    height: 20px;
-    background-color: transparent;
-    border-radius: 50%;
-    /* 利用盒子阴影来实现小圆点绕着中心的效果 */
-    box-shadow: 0 -120px 0 var(--color), 0 120px 0 var(--color),
-      -120px 0 0 var(--color), 120px 0 0 var(--color);
-
-    /* 元素居中 */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    /* scale(0) 是先把小圆点隐藏起来，下面动画再显示 */
-    transform: translate(-50%, -50%) scale(0);
-  }
-
-  .box span::before {
-    content: "";
-
-    /* 利用伪元素复制一份小圆点，rotate(45deg) 旋转 45° */
-    transform: translate(-50%, -50%) rotate(45deg) scale(0);
-  }
-
-  .box input[type="checkbox"] {
-    /* 隐藏默认复选框样式 */
-    display: none;
-
-    position: absolute;
-  }
-
-  .box input[type="checkbox"]:checked~.icon path {
-    /* 给 svg 图标添加动画 */
-    animation: 1s animate-fill linear forwards;
-  }
-
-  @keyframes animate-fill {
-
-    /* 动画主要修改 svg 的描边偏移量和填充颜色，要掌握好动画的时间 */
-    0% {
-      stroke-dashoffset: 100;
-    }
-
-    80% {
-      stroke-dashoffset: 0;
-      fill: #ddd;
-    }
-
-    100% {
-      stroke-dashoffset: 0;
-      fill: var(--color);
-    }
-  }
-
-  .box input[type="checkbox"]:checked~span {
-    /* 给图标周围的小圆点添加动画 */
-    animation: 0.5s animate-flash ease-in-out forwards 0.85s;
-  }
-
-  @keyframes animate-flash {
-    0% {
-      /* 通过 scale(0.5) 放大缩小控制圆点距离 */
-      transform: translate(-50%, -50%) scale(0.5);
-      /* 控制圆点的显示和隐藏 */
-      opacity: 0.8;
-    }
-
-    50% {
-      transform: translate(-50%, -50%) scale(1);
-      opacity: 0.8;
-    }
-
-    100% {
-      transform: translate(-50%, -50%) scale(1.5);
-      opacity: 0;
-    }
-  }
-
-  .box input[type="checkbox"]:checked~span::before {
-    /* 同上一步一样，只不过伪元素需要单独添加旋转的 45° */
-    animation: 0.5s animate-flash-before ease-in-out forwards 0.85s;
-  }
-
-  @keyframes animate-flash-before {
-    0% {
-      transform: translate(-50%, -50%) rotate(45deg) scale(0.5);
-      opacity: 0.8;
-    }
-
-    50% {
-      transform: translate(-50%, -50%) rotate(45deg) scale(1);
-      opacity: 0.8;
-    }
-
-    100% {
-      transform: translate(-50%, -50%) rotate(45deg) scale(1.5);
-      opacity: 0;
-    }
-  }
-
-  /* 下面是分别为三个图标添加不一样的动画，原理一样，掌握好动画时间即可 */
-  .like input[type="checkbox"]:checked~.icon {
-    animation: 1s animate-like ease-in-out forwards 0.85s;
-  }
-
-  @keyframes animate-like {
-
-    0%,
-    100% {
-      transform: rotate(0);
-    }
-
-    30% {
-      transform: rotate(-30deg);
-    }
-
-    60% {
-      transform: rotate(10deg);
-    }
-
-    80% {
-      transform: rotate(-20deg);
-    }
-  }
-
-  .coin input[type="checkbox"]:checked~.icon {
-    animation: 1s animate-coin ease-in-out forwards;
-  }
-
-  @keyframes animate-coin {
-
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-
-    30% {
-      transform: translateY(-20px);
-    }
-
-    60% {
-      transform: translateY(10px);
-    }
-
-    80% {
-      transform: translateY(-10px);
-    }
-  }
-
-  .collect input[type="checkbox"]:checked~.icon {
-    animation: 1s animate-collect ease-in-out forwards;
-  }
-
-  @keyframes animate-collect {
-
-    0%,
-    100% {
-      transform: scale(1);
-    }
-
-    70% {
-      transform: scale(1);
-    }
-
-    80% {
-      transform: scale(1.5);
-    }
-  }
 }
 
 .panel.red {
@@ -379,157 +278,328 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
 
-  .box {
-    /* 父盒子内部两个元素居中显示，也可以用其他居中方式 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  @import url(https://fonts.bunny.net/css?family=abel:400);
 
-    position: relative;
-  }
-
-  .box h2 {
-    /* 因为定位会破坏换行，所以给一个能装下字的盒子宽度 */
-    width: 50vmin;
-    /* 字体大小、颜色、居中显示 */
-    font-size: 6vmin;
-    color: #fff;
-    text-align: center;
-
-    /* 父盒子已经给过元素居中了，这里让元素叠起来 */
+  /* Hide radio buttons */
+  input[type="radio"] {
     position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
   }
 
-  .box .loader {
-    /* 同样子元素居中 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .cards {
+    --base-rotation: 0deg;
+    --full-circle: 360deg;
+    --items: 20;
+    --radius: 30vw;
+    --duration: 300ms;
 
-    /* 牛奶父盒子宽高 */
-    width: 45vmin;
-    height: 45vmin;
-    /* 背景颜色，加滤镜之后会被滤镜处理掉 */
-    background-color: rgba(0, 0, 0, 0.2);
+    --cards-container-size: calc(var(--radius) * 2);
+    --thumb-size: 30px;
+    --image-size: calc(var(--radius));
+    --image-y: 0%;
+    --labels-offset: calc(var(--radius) * -1);
+    --title-top: calc(var(--thumb-size) * -3);
+    --info-top: calc(100% + 2rem);
+    --info-width: 100%;
 
-    /* svg 滤镜使用 */
-    filter: url(#Gooey);
-
-    position: relative;
-  }
-
-  .box .loader span {
-    /* 牛奶圆宽高、颜色、○ */
-    width: 30%;
-    height: 30%;
-    background-color: #fff;
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: var(--cards-container-size);
+    height: var(--cards-container-size);
+    aspect-ratio: 1;
     border-radius: 50%;
+    perspective: 1000px;
+    transition: transform 0.3s ease-in-out var(--duration);
+    list-style: none;
+  }
 
-    /* 定位叠加 */
+  @media (min-width: 800px) {
+    .cards {
+      --radius: 30vw;
+      --thumb-size: 40px;
+      --title-top: 2rem;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .cards {
+      --radius: 20vw;
+      --thumb-size: 50px;
+      --image-y: -20%;
+      --info-width: min(100% - 2rem, 65%);
+
+      --info-top: calc(var(--image-size) * 1.3);
+    }
+  }
+
+  .cards li {
     position: absolute;
-    /* 贴在盒子左边 */
-    left: 0;
-    /* 变换的基础点，让小圆点围绕父盒子中心旋转 */
-    transform-origin: calc(45vmin / 2);
-    /* 默认情况保持圆点在中间 */
-    transform: rotate(0deg) translateX(15.6vmin);
-
-    /* 旋转动画 */
-    animation: animate1 8s ease-in-out infinite;
-    /* 动画延时，根据 --i 变量设置不同的延时时间 */
-    animation-delay: calc(0.1s * var(--i));
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    transform-origin: center;
+    display: grid;
+    place-content: center;
+    transform: rotate(calc(var(--i) * 360deg / var(--items)));
+    pointer-events: none;
   }
 
-  @keyframes animate1 {
-
-    0%,
-    10%,
-    90%,
-    100% {
-      /* 保持初始大小，居中显示 */
-      width: 30%;
-      height: 30%;
-      transform: rotate(0deg) translateX(15.6vmin);
-    }
-
-    40%,
-    70% {
-      /* 缩小一圈 */
-      width: 18%;
-      height: 18%;
-      /* 旋转每个小圆点分散开的角度，去掉居中，保持贴在父盒子边缘 */
-      transform: rotate(calc(360deg / 8 * var(--i)));
-    }
+  .cards li>label {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    transform: translateY(var(--labels-offset));
+    width: var(--thumb-size);
+    height: var(--thumb-size);
+    cursor: pointer;
+    pointer-events: initial;
+    /*outline: 1px dashed red;*/
+    transition: var(--duration) ease-in-out;
   }
+
+  /* thumbs */
+  .cards li>label>img {
+    transform-origin: center;
+    width: 100%;
+    scale: var(--label-scale, 1);
+    opacity: var(--label-opacity, 1);
+    transition: scale var(--duration) ease-in-out,
+      opacity var(--duration) ease-in-out;
+  }
+
+  /* redudce scale of all thumbs */
+  .cards:has(label:hover) label {
+    --label-scale: 0.75;
+  }
+
+  /* enlarge thumbs either side of hovered */
+  .cards li:has(+ li > label:hover)>label,
+  .cards li:has(label:hover)+li>label {
+    --label-scale: 1.25;
+  }
+
+  /* hovered thumb */
+  .cards li>label:hover img {
+    --label-scale: 1.5;
+  }
+
+  /* main image */
+  .cards>li>img {
+    width: var(--image-size);
+    height: var(--image-size);
+    object-fit: contain;
+    z-index: 52;
+
+    transform: translateY(var(--image-y));
+    transition-property: opacity, scale, width, height, transform, filter;
+    transition-duration: var(--duration);
+    transition-timing-function: ease-in-out;
+    transition-delay: var(--item-delay, 0ms), var(--item-delay, 0ms), 0ms, 0ms, 0ms,
+      0ms;
+
+    pointer-events: initial;
+    opacity: var(--item-opacity, 0);
+    scale: var(--item-scale, 0);
+    filter: drop-shadow(0px 0px 5px rgba(255 255 255 / 0.25));
+  }
+
+  .cards>li:has(:checked)>img:hover {
+    transform: translateY(var(--image-y)) rotateY(-30deg) rotateX(-5deg);
+    transition-delay: 0ms;
+    filter: drop-shadow(15px 10px 5px rgba(255 255 255 / 0.25));
+  }
+
+  .cards>li>h2,
+  .cards>li>p {
+    position: absolute;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, 0);
+    transform-origin: center;
+  }
+
+  .cards>li>h2 {
+    top: var(--title-top);
+    opacity: var(--title-opacity, 0);
+    translate: 0 var(--title-y, -30px);
+    transition: var(--duration) ease-in-out var(--title-delay, 0ms);
+  }
+
+  .cards>li>p {
+    top: var(--info-top);
+    margin: 0 auto;
+    width: var(--info-width);
+    z-index: 2;
+    font-size: clamp(0.8rem, 3.5vw + 0.05rem, 1.1rem);
+    text-wrap: balance;
+    opacity: var(--info-opacity, 0);
+    translate: 0 var(--info-y, 30px);
+    transition: var(--duration) ease-in-out var(--info-delay, 0ms);
+  }
+
+  /* update custom properties for checked item */
+  li:has(input:checked) {
+    --label-opacity: 0.25;
+    --label-scale: 1;
+    --item-scale: 1;
+    --item-opacity: 1;
+    --item-delay: calc(var(--duration) * 2);
+    --title-opacity: 1;
+    --title-y: 0;
+    --title-delay: calc(var(--duration) * 3);
+    --info-opacity: 1;
+    --info-y: 0;
+    --info-delay: calc(var(--duration) * 3);
+    /*outline: 1px dashed red;*/
+    z-index: 99;
+  }
+
+  /* rotate container based on checked radio */
+  .cards:has(input:checked) {
+    transform: rotate(calc(var(--base-rotation) - (var(--index) * var(--full-circle) / var(--items))));
+  }
+
+  /*
+this would be so much simpler if we could use counter values as custom property values
+*/
+  .cards:has(input#item-1:checked) {
+    --index: 0;
+  }
+
+  .cards:has(input#item-2:checked) {
+    --index: 1;
+  }
+
+  .cards:has(input#item-3:checked) {
+    --index: 2;
+  }
+
+  .cards:has(input#item-4:checked) {
+    --index: 3;
+  }
+
+  .cards:has(input#item-5:checked) {
+    --index: 4;
+  }
+
+  .cards:has(input#item-6:checked) {
+    --index: 5;
+  }
+
+  .cards:has(input#item-7:checked) {
+    --index: 6;
+  }
+
+  .cards:has(input#item-8:checked) {
+    --index: 7;
+  }
+
+  .cards:has(input#item-9:checked) {
+    --index: 8;
+  }
+
+  .cards:has(input#item-10:checked) {
+    --index: 9;
+  }
+
+  .cards:has(input#item-11:checked) {
+    --index: 10;
+  }
+
+  .cards:has(input#item-12:checked) {
+    --index: 11;
+  }
+
+  .cards:has(input#item-13:checked) {
+    --index: 12;
+  }
+
+  .cards:has(input#item-14:checked) {
+    --index: 13;
+  }
+
+  .cards:has(input#item-15:checked) {
+    --index: 14;
+  }
+
+  .cards:has(input#item-16:checked) {
+    --index: 15;
+  }
+
+  .cards:has(input#item-17:checked) {
+    --index: 16;
+  }
+
+  .cards:has(input#item-18:checked) {
+    --index: 17;
+  }
+
+  .cards:has(input#item-19:checked) {
+    --index: 18;
+  }
+
+  .cards:has(input#item-20:checked) {
+    --index: 19;
+  }
+
+  /* general styling */
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+  }
+
+  :root {
+    --clr-bg: #000;
+    --clr-primary: rgb(248, 243, 243);
+  }
+
+  html {
+    background-color: var(--clr-bg);
+    font-family: "Abel", sans-serif;
+  }
+
+  body {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    line-height: 1.4;
+    color: var(--clr-primary);
+    padding: 1rem;
+    margin: 0;
+  }
+
+  /* DEBUG - cross-hairs for center of body */
+  /*
+body::after,
+body::before{
+  content: '';
+  position: absolute;
+  background-color: green;
+  opacity: .5;
+  z-index: -10;
 }
+body::before{
+  inset: 0 50%;
+  width: 1px;
+}
+body::after{
+  inset: 50% 0;
+  height: 1px;
+}
+*/
 
-.panel.gray {
-  background-color: #777;
-  background-image: linear-gradient(114.41deg, #0ae448 20.74%, #abff84 65.5%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .loader {
-    position: relative;
-
-    width: 500px;
-    height: 10px;
-    background-color: #fff;
-
-    -webkit-box-reflect: below 1px linear-gradient(transparent, rgba(0, 0, 0, 0.5));
-  }
-
-  .loader::before {
-    content: "";
-    position: absolute;
-
-    inset: 0;
-    background: linear-gradient(90deg,
-        #fb0099,
-        #0000ff,
-        #00ff00,
-        #ffff00,
-        #fb0094,
-        #0000ff,
-        #00ff00,
-        #ffff00,
-        #fb0090);
-    background-size: 500%;
-
-    animation: animate 20s linear infinite;
-  }
-
-  .loader::after {
-    content: "";
-    position: absolute;
-
-    inset: 0;
-    background: linear-gradient(90deg,
-        #fb0099,
-        #0000ff,
-        #00ff00,
-        #ffff00,
-        #fb0094,
-        #0000ff,
-        #00ff00,
-        #ffff00,
-        #fb0090);
-    background-size: 500%;
-    filter: blur(20px);
-
-    animation: animate 20s linear infinite;
-  }
-
-  @keyframes animate {
-    0% {
-      background-position: 0 0;
-    }
-
-    0% {
-      background-position: 500% 0;
-    }
-  }
 }
 
 .panel.purple {

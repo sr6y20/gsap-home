@@ -5,13 +5,13 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 const foxInit = () => {
     const scene = new THREE.Scene();
-    scene.background = null; // 设置为透明背景
+    scene.background = null;
 
     const camera = new THREE.PerspectiveCamera(75, 300 / 300, 0.1, 1000);
     camera.position.set(2, 1.5, 3);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true }); // 启用 alpha
-    renderer.setSize(300, 300); // 设置固定大小
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+    renderer.setSize(300, 300);
     document.querySelector('.fox-wrapper')!.appendChild(renderer.domElement);
 
     const controls = new OrbitControls(camera, renderer.domElement);
@@ -59,17 +59,17 @@ const foxInit = () => {
 
     animate();
 
-    let angle = 0; // 初始角度（弧度）
-    const radius = 3; // 半径（离模型距离）
-    const target = new THREE.Vector3(0, 1, 0); // 模型中心点
+    let angle = 0;
+    const radius = 3;
+    const target = new THREE.Vector3(0, 1, 0);
 
     function rotateCameraTo(angleInRadians: number) {
         angle = angleInRadians;
         camera.position.x = target.x + radius * Math.sin(angle);
         camera.position.z = target.z + radius * Math.cos(angle);
-        camera.lookAt(target); // 始终看向模型
+        camera.lookAt(target);
     }
-    rotateCameraTo(Math.PI / 2.2);
+    rotateCameraTo(Math.PI / 0.68);
 }
 
 onMounted(() => {
@@ -85,9 +85,9 @@ onMounted(() => {
 .fox-wrapper {
     width: 300px;
     height: 300px;
-    position: fixed;
-    top: 0;
-    right: 0;
+    position: absolute;
+    top: 2665px;
+    left: 1110px;
     z-index: 888;
 }
 </style>

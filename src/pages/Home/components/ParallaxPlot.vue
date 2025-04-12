@@ -40,8 +40,42 @@ const firstBackgroundInit = () => {
     gsap.ticker.lagSmoothing(0);
 }
 
+
+const range = 40;
+const calcValue = function calcValue(a: number, b: number) {
+    return ((a / b) * range - range / 2).toFixed(1);
+};
+
+const layer4Ref = useTemplateRef("layer4Ref")
+let timeout: any;
+const mousemoveEvent = (_ref: any) => {
+    let x = _ref.x,
+        y = _ref.y;
+    if (timeout) {
+        window.cancelAnimationFrame(timeout);
+    }
+
+    timeout = window.requestAnimationFrame(function () {
+        let xValue = calcValue(x, window.innerWidth) as unknown as number;
+        let yValue = calcValue(y, window.innerHeight) as unknown as number;
+        layer4Ref.value!.style.transform = `translate3d(${xValue * 0.2}px, ${yValue * 0.2}px, 0)`;
+    });
+};
+
+
 onMounted(() => {
     firstBackgroundInit()
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                document.addEventListener('mousemove', mousemoveEvent);
+            } else {
+                document.removeEventListener('mousemove', mousemoveEvent);
+            }
+        });
+    });
+    observer.observe(document.querySelector('.parallax__header')!);
 })
 </script>
 
@@ -56,9 +90,11 @@ onMounted(() => {
                     <img src="/layer-2.png" loading="eager" width="800" data-parallax-layer="2" alt=""
                         class="parallax__layer-img">
                     <div data-parallax-layer="3" class="parallax__layer-title">
-                        <h2 class="parallax__title">SR6Y20</h2>
+                        <h2 class="parallax__title" data-text="SR6Y20">SR6Y20</h2>
                     </div>
                     <img src="/layer-3.png" loading="eager" width="800" data-parallax-layer="4" alt=""
+                        class="parallax__layer-img">
+                    <img src="/layer-4.png" ref="layer4Ref" loading="eager" width="800" alt=""
                         class="parallax__layer-img">
                 </div>
                 <div class="parallax__fade"></div>
@@ -189,6 +225,12 @@ onMounted(() => {
     font-weight: 800;
     line-height: 1;
     position: relative;
+    color: transparent;
+    background-image: linear-gradient(to bottom, #53fcff, #3dfcff, #27A8FC, #9F67C1, #FE275C, #ED2D36);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 12px -12px #ffffff;
 }
 
 .parallax__radial-gradient {

@@ -99,7 +99,7 @@ onMounted(() => {
         scrollTrigger: {
             trigger: ".description",
             start: "top top",
-            end: "+=200",
+            end: "+=160",
             pin: true,
             scrub: 0.5
         }
@@ -125,12 +125,7 @@ onMounted(() => {
     <div class="description">
         <section class="cards">
             <div class="three-d-wrapper">
-                <div class="card charizard animated">
-                    <p style="text-align: center;margin: 10px 0;">法国火山口</p>
-                    <v-img :width="220" cover :rounded="10" src="/layer-1.png"></v-img>
-                    <p style="margin: 10px 0;">Design an impressive settings page with Vuetify Snippets, utilizing
-                        Setting components for a polished and intuitive user experience.</p>
-                </div>
+                <div class="card charizard animated" />
             </div>
             <div class="three-d-wrapper">
                 <div class="card pika animated" />
@@ -142,27 +137,6 @@ onMounted(() => {
                 <div class="card mewtwo animated" />
             </div>
         </section>
-
-        <div class="gradient-bg">
-            <svg xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <filter id="goo">
-                        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-                        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
-                            result="goo" />
-                        <feBlend in="SourceGraphic" in2="goo" />
-                    </filter>
-                </defs>
-            </svg>
-            <div class="gradients-container">
-                <div class="g1"></div>
-                <div class="g2"></div>
-                <div class="g3"></div>
-                <div class="g4"></div>
-                <div class="g5"></div>
-                <div class="interactive"></div>
-            </div>
-        </div>
     </div>
 </template>
 
@@ -173,182 +147,9 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
-    min-height: 100vh;
-}
-
-.description {
     padding: 50px 0;
-    --color-bg1: rgb(108, 0, 162);
-    --color-bg2: rgb(0, 17, 82);
-    --color1: 18, 113, 255;
-    --color2: 221, 74, 255;
-    --color3: 100, 220, 255;
-    --color4: 200, 50, 50;
-    --color5: 180, 180, 50;
-    --color-interactive: 140, 100, 255;
-    --circle-size: 80%;
-    --blending: hard-light;
-
-    @keyframes moveInCircle {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        50% {
-            transform: rotate(180deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-
-    @keyframes moveVertical {
-        0% {
-            transform: translateY(-50%);
-        }
-
-        50% {
-            transform: translateY(50%);
-        }
-
-        100% {
-            transform: translateY(-50%);
-        }
-    }
-
-    @keyframes moveHorizontal {
-        0% {
-            transform: translateX(-50%) translateY(-10%);
-        }
-
-        50% {
-            transform: translateX(50%) translateY(10%);
-        }
-
-        100% {
-            transform: translateX(-50%) translateY(-10%);
-        }
-    }
-
-    .gradient-bg {
-        width: 100vw;
-        height: 100%;
-        position: absolute;
-        overflow: hidden;
-        background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
-        top: 0;
-        left: 0;
-
-        svg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-        }
-
-
-        .gradients-container {
-            filter: url(#goo) blur(40px);
-            width: 100%;
-            height: 100%;
-        }
-
-        .g1 {
-            position: absolute;
-            background: radial-gradient(circle at center, rgba(var(--color1), 0.8) 0, rgba(var(--color1), 0) 50%) no-repeat;
-            mix-blend-mode: var(--blending);
-
-            width: var(--circle-size);
-            height: var(--circle-size);
-            top: calc(50% - var(--circle-size) / 2);
-            left: calc(50% - var(--circle-size) / 2);
-
-            transform-origin: center center;
-            animation: moveVertical 30s ease infinite;
-
-            opacity: 1;
-        }
-
-        .g2 {
-            position: absolute;
-            background: radial-gradient(circle at center, rgba(var(--color2), 0.8) 0, rgba(var(--color2), 0) 50%) no-repeat;
-            mix-blend-mode: var(--blending);
-
-            width: var(--circle-size);
-            height: var(--circle-size);
-            top: calc(50% - var(--circle-size) / 2);
-            left: calc(50% - var(--circle-size) / 2);
-
-            transform-origin: calc(50% - 400px);
-            animation: moveInCircle 20s reverse infinite;
-
-            opacity: 1;
-        }
-
-        .g3 {
-            position: absolute;
-            background: radial-gradient(circle at center, rgba(var(--color3), 0.8) 0, rgba(var(--color3), 0) 50%) no-repeat;
-            mix-blend-mode: var(--blending);
-
-            width: var(--circle-size);
-            height: var(--circle-size);
-            top: calc(50% - var(--circle-size) / 2 + 200px);
-            left: calc(50% - var(--circle-size) / 2 - 500px);
-
-            transform-origin: calc(50% + 400px);
-            animation: moveInCircle 40s linear infinite;
-
-            opacity: 1;
-        }
-
-        .g4 {
-            position: absolute;
-            background: radial-gradient(circle at center, rgba(var(--color4), 0.8) 0, rgba(var(--color4), 0) 50%) no-repeat;
-            mix-blend-mode: var(--blending);
-
-            width: var(--circle-size);
-            height: var(--circle-size);
-            top: calc(50% - var(--circle-size) / 2);
-            left: calc(50% - var(--circle-size) / 2);
-
-            transform-origin: calc(50% - 200px);
-            animation: moveHorizontal 40s ease infinite;
-
-            opacity: 0.7;
-        }
-
-        .g5 {
-            position: absolute;
-            background: radial-gradient(circle at center, rgba(var(--color5), 0.8) 0, rgba(var(--color5), 0) 50%) no-repeat;
-            mix-blend-mode: var(--blending);
-
-            width: calc(var(--circle-size) * 2);
-            height: calc(var(--circle-size) * 2);
-            top: calc(50% - var(--circle-size));
-            left: calc(50% - var(--circle-size));
-
-            transform-origin: calc(50% - 800px) calc(50% + 200px);
-            animation: moveInCircle 20s ease infinite;
-
-            opacity: 1;
-        }
-
-        .interactive {
-            position: absolute;
-            background: radial-gradient(circle at center, rgba(var(--color-interactive), 0.8) 0, rgba(var(--color-interactive), 0) 50%) no-repeat;
-            mix-blend-mode: var(--blending);
-
-            width: 100%;
-            height: 100%;
-            top: -50%;
-            left: -50%;
-
-            opacity: 0.7;
-        }
-    }
+    min-height: 100vh;
+    background-image: url('/layer-1.png');
 }
 
 .cards {
@@ -356,12 +157,16 @@ onMounted(() => {
     --color2: rgb(255, 0, 231);
     --charizard1: #fac;
     --charizard2: #ddccaa;
+    --charizardfront: url(/project-card-bg1.png);
     --pika1: #54a29e;
     --pika2: #a79d66;
-    --eevee1: #efb2fb;
-    --eevee2: #acc6f8;
-    --mewtwo1: #efb2fb;
-    --mewtwo2: #acc6f8;
+    --pikafront: url(/project-card-bg2.png);
+    --eevee1: #acc6f8;
+    --eevee2: #b2fbbd;
+    --eeveefront: url(/project-card-bg3.png);
+    --mewtwo1: #acc6f8;
+    --mewtwo2: #fbefb2;
+    --mewtwofront: url(/project-card-bg4.png);
 }
 
 .card {
@@ -369,17 +174,6 @@ onMounted(() => {
     width: 71.5vw;
     height: 100vw;
     padding: 20px;
-
-    // width: clamp(200px, 61vh, 18vw);
-    // height: clamp(280px, 85vh, 25.2vw);
-    @media screen and (min-width: 600px) {
-        // width: 61vh;
-        // height: 85vh;
-        // max-width: 500px;
-        // max-height: 700px;
-        width: clamp(12.9vw, 61vh, 18vw);
-        height: clamp(18vw, 85vh, 25.2vw);
-    }
 
     position: relative;
     overflow: hidden;
@@ -391,23 +185,34 @@ onMounted(() => {
 
     border-radius: 5% / 3.5%;
     box-shadow: -5px -5px 5px -5px var(--color1),
-    5px 5px 5px -5px var(--color2),
-    -7px -7px 10px -5px transparent,
-    7px 7px 10px -5px transparent,
-    0 0 5px 0px rgba(255, 255, 255, 0),
-    0 55px 35px -20px rgba(0, 0, 0, 0.5);
+        5px 5px 5px -5px var(--color2),
+        -7px -7px 10px -5px transparent,
+        7px 7px 10px -5px transparent,
+        0 0 5px 0px rgba(255, 255, 255, 0),
+        0 55px 35px -20px rgba(0, 0, 0, 0.5);
 
     transition: transform 0.5s ease,
-    box-shadow 0.2s ease;
+        box-shadow 0.2s ease;
     will-change: transform,
-    filter;
+        filter;
 
     background-color: #040712;
+    background-image: var(--front);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
     transform-origin: center;
 
+    // width: clamp(200px, 61vh, 18vw);
+    // height: clamp(280px, 85vh, 25.2vw);
+    @media screen and (min-width: 600px) {
+        // width: 61vh;
+        // height: 85vh;
+        // max-width: 500px;
+        // max-height: 700px;
+        width: clamp(12.9vw, 61vh, 18vw);
+        height: clamp(18vw, 85vh, 25.2vw);
+    }
 }
 
 .card:hover {
@@ -423,24 +228,25 @@ onMounted(() => {
 .card.charizard {
     --color1: var(--charizard1);
     --color2: var(--charizard2);
+    --front: var(--charizardfront);
 }
 
 .card.pika {
     --color1: var(--pika1);
     --color2: var(--pika2);
+    --front: var(--pikafront);
 }
 
 .card.mewtwo {
     --color1: var(--mewtwo1);
     --color2: var(--mewtwo2);
+    --front: var(--mewtwofront);
 }
 
 .card.eevee {
-    --color1: #ec9bb6;
-    --color2: #ccac6f;
-    --color3: #69e4a5;
-    --color4: #8ec5d6;
-    --color5: #b98cce;
+    --color1: var(--eevee1);
+    --color2: var(--eevee2);
+    --front: var(--eeveefront);
 }
 
 .card:before,
@@ -490,8 +296,7 @@ onMounted(() => {
 
 .card.active:after,
 .card:hover:after {
-    filter: brightness(1) contrast(1);
-    ;
+    filter: brightness(0.5) contrast(1);
     opacity: 1;
 }
 
@@ -637,25 +442,6 @@ onMounted(() => {
     55% {
         transform: rotateZ(-3deg) rotateX(-12deg) rotateY(-27deg);
     }
-}
-
-.card.eevee:hover {
-    box-shadow:
-        0 0 30px -5px white,
-        0 0 10px -2px white,
-        0 55px 35px -20px rgba(0, 0, 0, 0.5);
-}
-
-.card.eevee:hover:before,
-.card.eevee.active:before {
-    background-image: linear-gradient(115deg,
-            transparent 20%,
-            var(--color1) 36%,
-            var(--color2) 43%,
-            var(--color3) 50%,
-            var(--color4) 57%,
-            var(--color5) 64%,
-            transparent 80%);
 }
 
 .cards .three-d-wrapper {
