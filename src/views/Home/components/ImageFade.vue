@@ -3,6 +3,7 @@ import html2canvas from 'html2canvas';
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import '@/plugins/effect/imagesloaded.pkgd.min.js';
+import { onMounted } from 'vue';
 
 gsap.registerPlugin(ScrollTrigger);
 

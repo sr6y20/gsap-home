@@ -2,6 +2,7 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import '@/plugins/effect/lenis.min.js';
+import { onMounted, useTemplateRef } from "vue";
 
 declare let Lenis: any;
 gsap.registerPlugin(ScrollTrigger);

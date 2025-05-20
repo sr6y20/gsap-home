@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
+
 const livingWords = () => {
     const kiplingPoem = `<p>If you can <span>keep</span> your head when all about you    
 Are <span>losing</span> theirs and <span>blaming</span> it on you; 
