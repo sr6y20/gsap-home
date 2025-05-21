@@ -28,7 +28,8 @@ const firstBackgroundInit = () => {
                 triggerElement.querySelectorAll(`[data-parallax-layer="${layerObj.layer}"]`),
                 {
                     yPercent: layerObj.yPercent,
-                    ease: "none"
+                    ease: "none",
+                    willChange: "transform",
                 },
                 idx === 0 ? undefined : "<"
             );
@@ -63,6 +64,20 @@ const mousemoveEvent = (_ref: any) => {
     });
 };
 
+let timeout2: any;
+const imgAnimate = (event: DeviceOrientationEvent) => {
+
+    if (timeout2) {
+        window.cancelAnimationFrame(timeout2);
+    }
+
+    timeout2 = window.requestAnimationFrame(function () {
+        let xValue = calcValue((innerWidth / 2 + (event.gamma!) * 20), window.innerWidth) as unknown as number;
+        let yValue = calcValue((innerHeight / 2 + (event.beta!) * 20), window.innerHeight) as unknown as number;
+        layer4Ref.value!.style.transform = `translate3d(${xValue * 0.2}px, ${yValue * 0.2}px, 0)`;
+    });
+}
+
 
 onMounted(() => {
     firstBackgroundInit()
@@ -71,8 +86,12 @@ onMounted(() => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
                 document.addEventListener('mousemove', mousemoveEvent);
+                if (window.DeviceOrientationEvent)
+                    window.addEventListener('deviceorientation', imgAnimate);
             } else {
                 document.removeEventListener('mousemove', mousemoveEvent);
+                if (window.DeviceOrientationEvent)
+                    window.removeEventListener('deviceorientation', imgAnimate);
             }
         });
     });

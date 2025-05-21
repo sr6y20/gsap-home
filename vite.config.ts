@@ -30,6 +30,16 @@ export default defineConfig({
       resolvers: [NaiveUiResolver()]
     }),
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler', // 或 "modern"
+        importers: [
+          // ...
+        ],
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

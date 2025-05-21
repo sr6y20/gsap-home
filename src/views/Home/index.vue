@@ -5,18 +5,17 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ParallaxPlot from '@/views/Home/components/ParallaxPlot.vue';
 import ProjectCard from "@/views/Home/components/ProjectCard.vue";
 import FoxGLTF from "@/views/Home/components/FoxGLTF.vue";
-import ImageFade from "@/views/Home/components/ImageFade.vue";
-import Fish from "@/views/Home/components/Fish.vue";
-import NeonRoom from "@/views/Home/components/NeonRoom.vue";
 import Contact from "@/views/Home/components/Contact.vue";
-import { onMounted } from "vue";
+import ProjectBox from "@/components/ProjectBox.vue";
+import { onMounted, useTemplateRef } from "vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const foxRef = useTemplateRef('fox');
 const contentScreen = () => {
-
     let sections = gsap.utils.toArray(".panel");
     gsap.to(sections, {
+        willChange: "transform",
         xPercent: -100 * (sections.length - 1),
         ease: "none",
         scrollTrigger: {
@@ -24,8 +23,16 @@ const contentScreen = () => {
             pin: true,
             scrub: 0.3,
             start: "top top",
-            end: "+=400"
-        }
+            end: "+=400",
+            onEnter: () => {
+                if (foxRef.value)
+                    foxRef.value.rotateCameraTo(Math.PI / 0.324)
+            },
+            onEnterBack: () => {
+                if (foxRef.value)
+                    foxRef.value.rotateCameraTo(Math.PI / 4)
+            },
+        },
     });
 }
 
@@ -39,7 +46,7 @@ onMounted(() => {
     <ProjectCard />
 
     <!-- <Fish /> -->
-    <!-- <FoxGLTF /> -->
+    <FoxGLTF ref="fox" />
 
     <!-- <ImageFade /> -->
 
@@ -270,11 +277,10 @@ onMounted(() => {
         </section>
 
         <section class="panel purple">
-
+            <ProjectBox />
         </section>
     </div>
 
-    <!-- <NeonRoom /> -->
     <Contact />
 </template>
 

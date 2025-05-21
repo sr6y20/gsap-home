@@ -96,6 +96,7 @@ onMounted(() => {
     document.head.appendChild(styleEl);
 
     gsap.to(".description", {
+        willChange: "transform",
         scrollTrigger: {
             trigger: ".description",
             start: "top top",
@@ -109,10 +110,8 @@ onMounted(() => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 bindCardEvents();
-                console.log('绑定事件')
             } else {
                 unbindCardEvents();
-                console.log('解绑事件')
             }
         });
     });
@@ -150,6 +149,7 @@ onMounted(() => {
     padding: 50px 0;
     min-height: 100vh;
     background-image: url('/layer-1.png');
+    box-sizing: border-box;
 }
 
 .cards {
