@@ -102,10 +102,11 @@ onMounted(() => {
         </svg>
 
         <div class="link">
-            <a href="https://www.instagram.com/sr6y20/" target="_blank">INSTAGRAM</a>
-            <a href="https://www.facebook.com/sr6y20/" target="_blank">FACEBOOK</a>
-            <a href="https://www.youtube.com/channel/UCr2YwQX6Y2Y4j0q5qX8j0WQ" target="_blank">YOUTUBE</a>
-            <a href="https://www.tiktok.com/@sr6y20" target="_blank">TIKTOK</a>
+            <a href="https://github.com/sr6y20" target="_blank">GITHUB</a>
+            <a href="https://gitee.com/sr6y20" target="_blank">GITEE</a>
+            <a href="https://space.bilibili.com/484923273" target="_blank">BILIBILI</a>
+            <a href="https://res.abeim.cn/api/qq/?qq=1836165455" target="_blank">QQ</a>
+            <a href="mailto:1836165455@qq.com" target="_blank">EMAIL</a>
         </div>
     </div>
 </template>

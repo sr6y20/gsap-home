@@ -2,39 +2,52 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+import Loading from "@/components/Loading.vue";
 import ParallaxPlot from '@/views/Home/components/ParallaxPlot.vue';
 import ProjectCard from "@/views/Home/components/ProjectCard.vue";
 import FoxGLTF from "@/views/Home/components/FoxGLTF.vue";
 import Contact from "@/views/Home/components/Contact.vue";
 import ProjectBox from "@/components/ProjectBox.vue";
+import BallSimulation from "./components/BallSimulation.vue";
 import { onMounted, useTemplateRef } from "vue";
+import AIBot from "./components/AIBot.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const foxRef = useTemplateRef('fox');
+// const foxRef = useTemplateRef('fox');
 const contentScreen = () => {
-    let sections = gsap.utils.toArray(".panel");
+    const sections = gsap.utils.toArray<HTMLElement>(".panel");
+    const sectionCount = sections.length;
+    const step = 1 / (sectionCount - 1);
+
     gsap.to(sections, {
         willChange: "transform",
-        xPercent: -100 * (sections.length - 1),
+        xPercent: -100 * (sectionCount - 1),
         ease: "none",
         scrollTrigger: {
             trigger: ".link-container",
             pin: true,
             scrub: 0.3,
             start: "top top",
-            end: "+=400",
-            onEnter: () => {
-                if (foxRef.value)
-                    foxRef.value.rotateCameraTo(Math.PI / 0.324)
-            },
-            onEnterBack: () => {
-                if (foxRef.value)
-                    foxRef.value.rotateCameraTo(Math.PI / 4)
+            end: () => "+=" + (window.innerWidth * (sectionCount - 1)),
+            snap: {
+                // 自定义 snapTo 函数，实现三分之一逻辑
+                snapTo: (rawProgress) => {
+                    const page = rawProgress / step;
+                    const pageIndex = Math.floor(page);
+                    const remainder = page - pageIndex;
+
+                    // 如果滑动超过 1/3，进到下一页；否则回到当前页
+                    return (remainder > 1 / 3 ? pageIndex + 1 : pageIndex) * step;
+                },
+                duration: 0.3,
+                delay: 0.05,
+                ease: "power1.inOut",
             },
         },
     });
-}
+};
+
 
 onMounted(() => {
     contentScreen();
@@ -42,18 +55,20 @@ onMounted(() => {
 </script>
 
 <template>
+    <!-- <Loading /> -->
+
     <ParallaxPlot />
     <ProjectCard />
 
     <!-- <Fish /> -->
-    <FoxGLTF ref="fox" />
+    <!-- <FoxGLTF ref="fox" /> -->
 
     <!-- <ImageFade /> -->
 
     <div class="link-container">
 
         <section class="panel red">
-            <ul class="cards-container cards">
+            <!-- <ul class="cards-container cards">
                 <li style="--i: 0;" data-name="Bulbasaur">
                     <input type="radio" id="item-1" name="gallery-item" checked>
                     <label for="item-1">
@@ -273,11 +288,13 @@ onMounted(() => {
                         it as its
                         own. </p>
                 </li>
-            </ul>
+            </ul> -->
+            <AIBot />
         </section>
 
         <section class="panel purple">
-            <ProjectBox />
+            <!-- <ProjectBox /> -->
+            <BallSimulation />
         </section>
     </div>
 
@@ -633,257 +650,7 @@ body::after{
 .panel.purple {
     background-color: #8d3dae;
     background-image: linear-gradient(153.58deg, #f7bdf8 32.25%, #2f3cc0 92.68%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
-    .road {
-        display: flex;
-        justify-content: center;
-        align-items: center;
 
-        width: 700px;
-        height: 150px;
-        background-color: #333;
-        border-radius: 75px;
-
-        transform-style: preserve-3d;
-        perspective: 500px;
-
-        position: relative;
-    }
-
-    .road::before {
-        content: "";
-
-        width: 100%;
-        height: 4px;
-        background: linear-gradient(90deg,
-                #fff,
-                #fff 50%,
-                transparent 50%,
-                transparent 100%);
-        background-size: 50px;
-
-        position: absolute;
-
-        animation: animate-road 0.1s linear infinite;
-    }
-
-    @keyframes animate-road {
-        0% {
-            background-position: 50px 0;
-        }
-
-        100% {
-            background-position: 0 0;
-        }
-    }
-
-    .taxi {
-        width: 200px;
-        height: 80px;
-        background-color: #f4b603;
-        border-radius: 10px;
-        box-shadow: -10px 10px rgba(0, 0, 0, 0.2);
-
-        transform-style: preserve-3d;
-        perspective: 800px;
-
-        position: absolute;
-        left: 50px;
-        z-index: 10;
-
-        animation: animate-taxi 2s linear infinite;
-    }
-
-    .taxi:nth-child(2) {
-        left: initial;
-        right: 150px;
-        z-index: 9;
-
-        animation: animate-taxi 4s linear infinite;
-        animation-delay: -1s;
-    }
-
-    @keyframes animate-taxi {
-        0% {
-            transform: translate(20px, -20px);
-        }
-
-        25% {
-            transform: translate(-10px, 0);
-        }
-
-        50% {
-            transform: translate(20px, 20px);
-        }
-
-        75% {
-            transform: translate(-10px, 0);
-        }
-
-        100% {
-            transform: translate(20px, -20px);
-        }
-    }
-
-    .taxi::before {
-        content: "";
-
-        width: 5px;
-        height: 15px;
-        background-color: #fc3c25;
-        border-radius: 2px;
-        box-shadow: 0 42px #fc3c25;
-
-        position: absolute;
-        top: 12px;
-        left: 2px;
-    }
-
-    .taxi::after {
-        content: "";
-
-        width: 5px;
-        height: 16px;
-        background-color: #fff;
-        border-radius: 2px;
-        box-shadow: 0 44px #fff;
-
-        position: absolute;
-        top: 10px;
-        right: 2px;
-    }
-
-    .taxi .top {
-        inset: 5px 10px;
-        background-color: #fdd206;
-        border-radius: 10px;
-        overflow: hidden;
-
-        position: absolute;
-    }
-
-    .taxi .top::before {
-        content: "taxi";
-
-        background-color: #fff;
-        padding: 2px;
-        font-size: 0.75em;
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        box-shadow: 0 0 0 1px #0005;
-
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) rotate(90deg);
-        z-index: 10;
-    }
-
-    .taxi .top b {
-        inset: 0 30px;
-        background-color: #111;
-        border-radius: 10px;
-
-        position: absolute;
-    }
-
-    .taxi .top b::before {
-        content: "";
-
-        inset: 6px 25px;
-        background-color: #fdd206;
-        border-radius: 5px;
-
-        position: absolute;
-    }
-
-    .taxi .top b::after {
-        content: "";
-
-        inset: 0 58px;
-        background-color: #fdd206;
-
-        position: absolute;
-    }
-
-    .taxi .top i {
-        inset: 0;
-
-        position: absolute;
-    }
-
-    .taxi .top i::before {
-        content: "";
-
-        width: 40px;
-        height: 5px;
-        background-color: #fdd206;
-        transform-origin: right;
-        transform: rotate(15deg);
-        box-shadow: 100px 34px #fdd206;
-
-        position: absolute;
-        top: 7px;
-        left: 20px;
-    }
-
-    .taxi .top i::after {
-        content: "";
-
-        width: 40px;
-        height: 5px;
-        background-color: #fdd206;
-        transform-origin: right;
-        transform: rotate(-15deg);
-        box-shadow: 100px -34px #fdd206;
-
-        position: absolute;
-        bottom: 7px;
-        left: 20px;
-    }
-
-    .taxi .light {
-        width: 10px;
-        height: 70px;
-        background-color: #0002;
-        border-radius: 15px;
-        transform-style: preserve-3d;
-
-        position: absolute;
-        top: 5px;
-        right: -2px;
-    }
-
-    .taxi .light::before {
-        content: "";
-
-        width: 150px;
-        height: 16px;
-        background: linear-gradient(90deg, #fff6, transparent);
-        transform-origin: left;
-        transform: perspective(500px) rotateY(-50deg);
-
-        position: absolute;
-        top: 5px;
-        left: 0;
-    }
-
-    .taxi .light::after {
-        content: "";
-
-        width: 150px;
-        height: 16px;
-        background: linear-gradient(90deg, #fff6, transparent);
-        transform-origin: left;
-        transform: perspective(500px) rotateY(-50deg);
-
-        position: absolute;
-        bottom: 5px;
-        left: 0;
-    }
 }
 </style>

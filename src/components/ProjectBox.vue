@@ -45,7 +45,7 @@ onMounted(() => {
     .p-card {
         width: 661px;
         height: 500px;
-        max-width: 52vw;
+        max-width: 90vw;
         max-height: 60vh;
         will-change: transform;
         border-radius: 20px;

@@ -66,6 +66,7 @@ const foxInit = () => {
     animate();
 
     // rotateCameraTo(Math.PI / 0.29);
+    rotateCameraTo(Math.PI / 4)
 }
 
 let angle = 0;
@@ -96,7 +97,7 @@ onMounted(() => {
     width: 300px;
     height: 300px;
     position: absolute;
-    top: 2600px;
+    top: 675px;
     right: 0px;
     z-index: 888;
 }
