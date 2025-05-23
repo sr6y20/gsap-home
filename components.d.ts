@@ -9,8 +9,13 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Loading: typeof import('./src/components/Loading.vue')['default']
+    Marquee: typeof import('./src/components/Marquee.vue')['default']
     NCard: typeof import('naive-ui')['NCard']
+    NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NModal: typeof import('naive-ui')['NModal']
+    NPopover: typeof import('naive-ui')['NPopover']
+    NTimeline: typeof import('naive-ui')['NTimeline']
+    NTimelineItem: typeof import('naive-ui')['NTimelineItem']
     ProjectBox: typeof import('./src/components/ProjectBox.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

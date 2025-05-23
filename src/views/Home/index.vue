@@ -9,7 +9,7 @@ import FoxGLTF from "@/views/Home/components/FoxGLTF.vue";
 import Contact from "@/views/Home/components/Contact.vue";
 import ProjectBox from "@/components/ProjectBox.vue";
 import BallSimulation from "./components/BallSimulation.vue";
-import { onMounted, useTemplateRef } from "vue";
+import { onMounted, ref, useTemplateRef } from "vue";
 import AIBot from "./components/AIBot.vue";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -48,14 +48,17 @@ const contentScreen = () => {
     });
 };
 
-
+const loadingState = ref(true);
 onMounted(() => {
     contentScreen();
+    setTimeout(() => {
+        loadingState.value = false;
+    }, 2000);
 })
 </script>
 
 <template>
-    <!-- <Loading /> -->
+    <Loading v-if="loadingState" />
 
     <ParallaxPlot />
     <ProjectCard />

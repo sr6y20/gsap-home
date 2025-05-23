@@ -1,148 +1,104 @@
-<script setup lang="ts"></script>
 <template>
-    <div class="l-wrapper">
-        <svg viewBox="0 0 800 600" class="svg--parent">
-            <rect width="100%" height="100%" class="r-bounds"></rect>
-
-            <linearGradient id="gr-bw">
-                <stop stop-color="black" offset="0" />
-                <stop stop-color="white" offset="100%" />
-            </linearGradient>
-
-            <mask id="mask" maskunits="objectBoundingBox" maskcontentunits="objectBoundingBox">
-                <rect y="0" width="1" height="1" fill="url(#gr-bw)" />
-            </mask>
-
-            <symbol id="s-petal">
-                <path
-                    d="M60,400 C60,400 120,298.319352 120,200 C120,89.54305 60,0 60,0 C60,0 0,89.54305 0,200 C0,310.45695 60,400 60,400 Z"
-                    class="e-petal"></path>
-            </symbol>
-
-            <svg viewBox="0 10 120 800">
-                <rect width="100%" height="100%" class="r-bounds"></rect>
-                <g class="g-petals">
-                    <!-- -->
-                    <g class="g-petal">
-                        <use xlink:href="#s-petal" />
-                    </g>
-                    <!-- -->
-                    <g class="g-petal">
-                        <use xlink:href="#s-petal" />
-                    </g>
-                    <!-- -->
-                    <g class="g-petal">
-                        <use xlink:href="#s-petal" />
-                    </g>
-                    <!-- -->
-                    <g class="g-petal">
-                        <use xlink:href="#s-petal" />
-                    </g>
-                    <!-- -->
-                    <g class="g-petal">
-                        <use xlink:href="#s-petal" />
-                    </g>
-                    <!-- -->
-                    <g class="g-petal">
-                        <use xlink:href="#s-petal" />
-                    </g>
-                    <!-- -->
-                    <g class="g-petal">
-                        <use xlink:href="#s-petal" />
-                    </g>
-                    <!-- -->
-                    <g class="g-petal">
-                        <use xlink:href="#s-petal" />
-                    </g>
-                    <!-- -->
-                    <g class="g-petal">
-                        <use xlink:href="#s-petal" />
-                    </g>
-                    <!-- -->
-                    <g class="g-petal">
-                        <use xlink:href="#s-petal" />
-                    </g>
-                    <!-- -->
-                    <g class="g-petal">
-                        <use xlink:href="#s-petal" />
-                    </g>
-                    <!-- -->
-                    <g class="g-petal">
-                        <use xlink:href="#s-petal" />
-                    </g>
-                    <!-- -->
-                    <g class="g-petal">
-                        <use xlink:href="#s-petal" />
-                    </g>
-                    <!-- -->
-                    <g class="g-petal">
-                        <use xlink:href="#s-petal" />
-                    </g>
-                    <!-- -->
-                    <g class="g-petal">
-                        <use xlink:href="#s-petal" />
-                    </g>
-                </g>
-
-
-            </svg>
-        </svg>
+    <div class="loader-container" :style="{ backdropFilter: `blur(${blur}px)` }">
+        <div class="pokeball"></div>
+        <p class="loading-text">正在召唤莉可，请稍候…</p>
     </div>
 </template>
-<style lang="scss" scoped>
-svg {
-    overflow: visible;
+
+<script setup lang="ts">
+import { onBeforeUnmount, onMounted, ref } from 'vue';
+let timer: number;
+const blur = ref(20)
+onMounted(() => {
+    setTimeout(() => {
+        timer = setInterval(() => {
+            blur.value = blur.value - 1
+        }, 100)
+    }, 1000)
+})
+onBeforeUnmount(() => {
+    clearInterval(timer)
+})
+</script>
+
+<style scoped lang="scss">
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: #393939;
+    text-align: center;
+    overflow: hidden;
+    position: fixed;
+    z-index: 999;
+    width: 100vw;
+    transition: all 0.3s ease-in-out;
 }
 
-.svg--parent {
-    width: 100%;
-    height: 95%;
+.pokeball {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(to bottom, #fff 50%, #ff1c1c 50%);
+    border: 4px solid #000;
+    border-radius: 50%;
+    position: relative;
+    animation: spin 1.5s linear infinite;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
-.l-wrapper {
+.pokeball::before,
+.pokeball::after {
+    content: "";
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #000;
 }
 
-.r-bounds {
-    fill: none;
-    /*   stroke: green */
+.pokeball::before {
+    top: 50%;
+    width: 100%;
+    height: 8px;
+    transform: translate(-50%, -50%);
 }
 
-$max: 15;
-$angle-step: 360/$max;
-
-.g-petals {
-    transform-origin: 60px 400px;
-    animation: rotate-360 20s infinite;
+.pokeball::after {
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border: 4px solid #000;
+    border-radius: 50%;
+    z-index: 1;
 }
 
-.g-petal {
-    transform-origin: 60px 415px;
+.loading-text {
+    margin-top: 24px;
+    font-size: 0.875rem;
+    animation: flicker 1.5s infinite;
+}
 
-    @for $item from 1 through $max {
-        $angle: $angle-step * $item;
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
 
-        &:nth-of-type(#{$max}n+#{$item}) {
-            transform: rotate(#{$angle}deg);
-            color: hsl($angle*3.2, 95%, 60%);
-        }
+    100% {
+        transform: rotate(360deg);
     }
 }
 
-.g-petal use {
-    fill: currentColor;
-    transform-origin: 60px 250px;
-    mask: url(#mask);
-    animation: rotate-360 5s infinite;
-}
+@keyframes flicker {
 
-@keyframes rotate-360 {
+    0%,
     100% {
-        transform: rotate(360deg);
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
     }
 }
 </style>

@@ -1,7 +1,35 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
 import { onMounted, useTemplateRef } from "vue";
+import Marquee from "@/components/Marquee.vue";
+
 const contactRef = useTemplateRef('contact');
+
+const links = [{
+    name: 'EMAIL',
+    icon: '#icon-QQyouxiang',
+    link: 'mailto:sr6y20@foxmail.com'
+}, {
+    name: 'BILIBILI',
+    icon: '#icon-bilibili',
+    link: 'https://space.bilibili.com/484923273'
+}, {
+    name: 'GITHUB',
+    icon: '#icon-github',
+    link: 'https://github.com/sr6y20'
+}, {
+    name: 'GITEE',
+    icon: '#icon-gitee',
+    link: 'https://gitee.com/sr6y20'
+}, {
+    name: 'QQ',
+    icon: '#icon-QQ',
+    link: 'https://res.abeim.cn/api/qq/?qq=1836165455'
+}]
+
+const onLinkClick = (link: string) => {
+    window.open(link, '_blank')
+}
 
 onMounted(() => {
     const tl = gsap.timeline({
@@ -75,12 +103,11 @@ onMounted(() => {
     observer.observe(document.querySelector('.contact') as Element);
 })
 
-
 </script>
 
 <template>
     <div class="contact" ref="contact">
-        <svg viewBox="0 0 1280 720">
+        <svg viewBox="0 0 1280 720" class="big-text">
             <mask id="maskLeft">
                 <rect x="-50%" width="100%" height="100%" fill="#fff" />
             </mask>
@@ -89,25 +116,20 @@ onMounted(() => {
             </mask>
             <g font-size="150">
                 <g mask="url(#maskLeft)" fill="#fff" class="left">
-                    <text y="120">NEXT</text>
-                    <text y="250">SEE IN</text>
+                    <text y="120">LET'S</text>
+                    <text y="250">CONTACT</text>
                     <text y="380">SR6Y20</text>
                 </g>
                 <g mask="url(#maskRight)" fill="#aaa" class="right">
-                    <text y="120">NEXT</text>
-                    <text y="250">SEE IN</text>
+                    <text y="120">LET'S</text>
+                    <text y="250">CONTACT</text>
                     <text y="380">SR6Y20</text>
                 </g>
             </g>
         </svg>
 
-        <div class="link">
-            <a href="https://github.com/sr6y20" target="_blank">GITHUB</a>
-            <a href="https://gitee.com/sr6y20" target="_blank">GITEE</a>
-            <a href="https://space.bilibili.com/484923273" target="_blank">BILIBILI</a>
-            <a href="https://res.abeim.cn/api/qq/?qq=1836165455" target="_blank">QQ</a>
-            <a href="mailto:1836165455@qq.com" target="_blank">EMAIL</a>
-        </div>
+        <Marquee />
+
     </div>
 </template>
 
@@ -120,17 +142,15 @@ onMounted(() => {
     font-style: normal;
     background: #000;
     overflow: hidden;
+    color: white;
 
-    svg {
+    .big-text {
         width: 100%;
         height: 70vh;
         margin-top: 100px;
     }
 
-    .link {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-    }
+
+
 }
 </style>

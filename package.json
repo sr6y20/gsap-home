@@ -41,6 +41,7 @@
     "unplugin-vue-components": "^28.5.0",
     "vfonts": "^0.0.3",
     "vite": "^5.3.1",
+    "vite-plugin-pwa": "^1.0.0",
     "vue-tsc": "^2.0.21"
   }
 }
