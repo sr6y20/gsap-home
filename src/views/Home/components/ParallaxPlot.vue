@@ -309,7 +309,7 @@ onMounted(() => {
 
 @font-face {
     font-family: 'PP Neue Corp Wide';
-    src: url('https://cdn.prod.website-files.com/671752cd4027f01b1b8f1c7f/6717e399d30a606fed425914_PPNeueCorp-WideUltrabold.woff2') format('woff2');
+    src: url('../../../assets/fonts/6717e399d30a606fed425914_PPNeueCorp-WideUltrabold.woff2') format('woff2');
     font-weight: 800;
     font-style: normal;
     font-display: swap;

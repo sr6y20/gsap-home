@@ -1,7 +1,11 @@
 <template>
     <div class="loader-container">
         <div class="pokeball"></div>
-        <p class="loading-text">正在召唤莉可，请稍候…</p>
+        <p class="loading-text">
+            <n-gradient-text type="danger">
+                正在召唤莉可，请稍候…
+            </n-gradient-text>
+        </p>
     </div>
 </template>
 
@@ -100,7 +104,7 @@ onBeforeUnmount(() => {
     }
 
     50% {
-        opacity: 0.4;
+        opacity: 0.6;
     }
 }
 </style>

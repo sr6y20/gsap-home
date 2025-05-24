@@ -11,6 +11,7 @@ declare module 'vue' {
     Loading: typeof import('./src/components/Loading.vue')['default']
     Marquee: typeof import('./src/components/Marquee.vue')['default']
     NCard: typeof import('naive-ui')['NCard']
+    NGradientText: typeof import('naive-ui')['NGradientText']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NModal: typeof import('naive-ui')['NModal']
     NPopover: typeof import('naive-ui')['NPopover']

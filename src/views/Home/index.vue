@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { onMounted, ref, useTemplateRef } from "vue";
 
 import Loading from "@/components/Loading.vue";
 import ParallaxPlot from '@/views/Home/components/ParallaxPlot.vue';
@@ -8,7 +9,6 @@ import FlowerColor from "@/views/Home/components/FlowerColor.vue";
 import FoxGLTF from "@/views/Home/components/FoxGLTF.vue";
 import Contact from "@/views/Home/components/Contact.vue";
 import BallSimulation from "./components/BallSimulation.vue";
-import { onMounted, ref, useTemplateRef } from "vue";
 import TimeLine from "./components/TimeLine.vue";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -101,7 +101,6 @@ onMounted(() => {
 
 <template>
     <div class="app-wrapper">
-
         <Loading v-if="loadingState" @start-lenis="startLenis" @stop-lenis="stopLenis" />
 
         <ParallaxPlot ref="parallaxPlot" />
@@ -119,6 +118,7 @@ onMounted(() => {
                 <BallSimulation />
             </section>
         </div>
+
         <Contact />
     </div>
 </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
 import { onMounted, useTemplateRef } from "vue";
-import Marquee from "@/components/Marquee.vue";
+import Marquee from "./Marquee.vue";
 
 const contactRef = useTemplateRef('contact');
 
