@@ -47,9 +47,10 @@ const onLinkClick = (link: string) => {
                     </div>
                 </div>
             </div>
-            <!-- 克隆一份 -->
+
             <div class="marquee-track">
-                <div v-for="link in links" :key="link.name" class="marquee-item">
+                <div v-for="link in links" :key="link.name" class="marquee-item" @click="onLinkClick(link.link)"
+                    :title="link.link">
                     <svg class="icon" aria-hidden="true">
                         <use :xlink:href="link.icon" />
                     </svg>
@@ -60,7 +61,7 @@ const onLinkClick = (link: string) => {
             </div>
         </div>
 
-        <!-- 渐隐遮罩两端 -->
+
         <div class="fade fade-left" />
         <div class="fade fade-right" />
     </div>

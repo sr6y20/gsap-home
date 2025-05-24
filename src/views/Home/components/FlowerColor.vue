@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, useTemplateRef } from 'vue';
+import { onMounted, ref, useTemplateRef } from 'vue';
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Draggable } from "gsap/Draggable";
@@ -15,13 +15,10 @@ const images = [
     "/flower/C9C1F0.png",
     "/flower/EFABBB.png"
 ]
-const baseImageUrl = ref('/flower/#C9C1F0.png');
-const imageTimestamp = ref(Date.now())
-const realImageUrl = computed(() => `${baseImageUrl.value}?t=${imageTimestamp.value}`);
+const baseImageUrl = ref('/flower/C9C1F0.png');
 
 const changeBackground = (newUrl: string) => {
     baseImageUrl.value = newUrl
-    imageTimestamp.value = Date.now()
 }
 
 onMounted(() => {
@@ -64,14 +61,13 @@ onMounted(() => {
 });
 </script>
 
-
 <template>
     <div class="p-con">
         <div class="wrapper">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 397.332 500">
                 <defs>
                     <pattern id="watercolour" patternUnits="userSpaceOnUse" width="100%" height="100%">
-                        <image :xlink:href="realImageUrl" width="100%" height="100%" />
+                        <image :xlink:href="baseImageUrl" width="100%" height="100%" />
                     </pattern>
                     <mask id="mask1">
                         <path id="mask1"
@@ -984,13 +980,13 @@ onMounted(() => {
             <img alt="paint4" src="/flower/paint4.png" />
         </div>
 
-        <p class="bg-title">Drag Over Flower To Change Color</p>
+        <p class="bg-title">DRAG OVER PAINT TO FLOWER</p>
     </div>
 </template>
 
-
 <style lang="scss" scoped>
 .p-con {
+    width: 100%;
     height: 100vh;
     margin: 0;
     padding: 0;

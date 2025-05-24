@@ -136,7 +136,6 @@ onMounted(() => {
 <style lang="scss" scoped>
 .contact {
     height: calc(100vh + 80px);
-    background-color: #000;
     font-optical-sizing: auto;
     font-weight: bold;
     font-style: normal;

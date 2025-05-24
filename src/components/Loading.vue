@@ -1,5 +1,5 @@
 <template>
-    <div class="loader-container" :style="{ backdropFilter: `blur(${blur}px)` }">
+    <div class="loader-container">
         <div class="pokeball"></div>
         <p class="loading-text">正在召唤莉可，请稍候…</p>
     </div>
@@ -7,17 +7,18 @@
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue';
-let timer: number;
-const blur = ref(20)
+
+const emits = defineEmits(['startLenis', 'stopLenis']);
+
 onMounted(() => {
-    setTimeout(() => {
-        timer = setInterval(() => {
-            blur.value = blur.value - 1
-        }, 100)
-    }, 1000)
+    // 禁用滚动
+    emits('stopLenis');
+    document.body.style.overflow = 'hidden';
 })
 onBeforeUnmount(() => {
-    clearInterval(timer)
+    // 启用滚动
+    emits('startLenis');
+    document.body.style.overflow = 'auto';
 })
 </script>
 
@@ -35,6 +36,7 @@ onBeforeUnmount(() => {
     z-index: 999;
     width: 100vw;
     transition: all 0.3s ease-in-out;
+    backdrop-filter: blur(10px);
 }
 
 .pokeball {

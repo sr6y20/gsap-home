@@ -16,7 +16,6 @@ declare module 'vue' {
     NPopover: typeof import('naive-ui')['NPopover']
     NTimeline: typeof import('naive-ui')['NTimeline']
     NTimelineItem: typeof import('naive-ui')['NTimelineItem']
-    ProjectBox: typeof import('./src/components/ProjectBox.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

@@ -2,11 +2,13 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import '@/plugins/effect/lenis.min.js';
-import { onMounted, useTemplateRef } from "vue";
+import { onMounted, ref, useTemplateRef } from "vue";
 
 declare let Lenis: any;
 gsap.registerPlugin(ScrollTrigger);
 
+
+const lenisRunning = ref(true);
 const firstBackgroundInit = () => {
     document.querySelectorAll('[data-parallax-layers]').forEach((triggerElement) => {
         let tl = gsap.timeline({
@@ -35,13 +37,29 @@ const firstBackgroundInit = () => {
             );
         });
     });
-    /* Lenis */
+
+    // Lenis
     const lenis = new Lenis();
     lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+    gsap.ticker.add((time) => {
+        if (lenisRunning.value) {
+            lenis.raf(time * 1000);
+        }
+    });
     gsap.ticker.lagSmoothing(0);
 }
+const startLenis = () => {
+    lenisRunning.value = true;
+};
 
+const stopLenis = () => {
+    lenisRunning.value = false;
+};
+// 暴露给父组件使用
+defineExpose({
+    startLenis,
+    stopLenis
+})
 
 const range = 40;
 const calcValue = function calcValue(a: number, b: number) {

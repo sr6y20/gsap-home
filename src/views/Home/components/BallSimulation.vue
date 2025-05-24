@@ -396,25 +396,47 @@ onMounted(() => {
         cursor: grab;
         background-size: cover;
         background-position: center;
-        box-shadow: inset -10px -10px 30px rgba(0, 0, 0, 0.3),
-            inset 10px 10px 30px rgba(255, 255, 255, 0.2),
-            0 5px 15px rgba(0, 0, 0, 0.3);
-        transition: box-shadow 0.3s;
+        background-repeat: no-repeat;
+
+        box-shadow:
+            inset -8px -8px 20px rgba(255, 255, 255, 0.3),
+            inset 8px 8px 20px rgba(0, 0, 0, 0.2),
+            0 8px 20px rgba(0, 0, 0, 0.25),
+            0 4px 6px rgba(0, 0, 0, 0.1);
+
+        transition: box-shadow 0.3s ease;
         user-select: none;
         display: flex;
         align-items: center;
         justify-content: center;
+
         font-size: 4em;
         font-weight: bold;
-        font-family: PP Neue Corp Wide, sans-serif;
+        font-family: 'PP Neue Corp Wide', sans-serif;
+        color: #fff;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+
+        backdrop-filter: blur(4px);
+
+        &:hover {
+            transform: scale(1.05);
+            box-shadow:
+                inset -6px -6px 16px rgba(255, 255, 255, 0.25),
+                inset 6px 6px 16px rgba(0, 0, 0, 0.2),
+                0 10px 25px rgba(0, 0, 0, 0.3),
+                0 5px 8px rgba(0, 0, 0, 0.1);
+        }
 
         &:active {
             cursor: grabbing;
-            box-shadow: inset -4px -4px 8px rgba(0, 0, 0, 0.3),
+            transform: scale(0.97);
+            box-shadow:
+                inset -4px -4px 8px rgba(0, 0, 0, 0.3),
                 inset 4px 4px 8px rgba(255, 255, 255, 0.1),
                 0 3px 10px rgba(0, 0, 0, 0.2);
         }
     }
+
 }
 
 .ball-paper-title {
