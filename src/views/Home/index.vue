@@ -10,8 +10,11 @@ import FoxGLTF from "@/views/Home/components/FoxGLTF.vue";
 import Contact from "@/views/Home/components/Contact.vue";
 import BallSimulation from "./components/BallSimulation.vue";
 import TimeLine from "./components/TimeLine.vue";
+import MarsSun from '@/assets/svgs/MarsSun.svg'
 
 gsap.registerPlugin(ScrollTrigger);
+
+const completeScale = ref(1);
 
 // const foxRef = useTemplateRef('fox');
 const contentScreen = () => {
@@ -89,8 +92,26 @@ const checkParallaxImagesLoaded = (callback: () => void) => {
     });
 }
 
+const onResizeScale = () => {
+    completeScale.value = Math.min(window.innerWidth, window.innerHeight) / 1440;
+}
+
 onMounted(() => {
     contentScreen();
+
+    completeScale.value = Math.min(window.innerWidth, window.innerHeight) / 1440;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                window.addEventListener('resize', onResizeScale)
+            } else {
+                window.removeEventListener('resize', onResizeScale)
+            }
+        });
+    });
+    observer.observe(document.querySelector('.red')!);
+
     setTimeout(() => {
         checkParallaxImagesLoaded(() => {
             loadingState.value = false;
@@ -102,7 +123,6 @@ onMounted(() => {
 <template>
     <div class="app-wrapper">
         <Loading v-if="loadingState" @start-lenis="startLenis" @stop-lenis="stopLenis" />
-
         <ParallaxPlot ref="parallaxPlot" />
         <FlowerColor />
 
@@ -111,7 +131,8 @@ onMounted(() => {
         <div class="link-container">
 
             <section class="panel red">
-                <TimeLine />
+                <!-- <TimeLine /> -->
+                <MarsSun :style="{ scale: `${completeScale}` }" />
             </section>
 
             <section class="panel purple">
@@ -141,8 +162,38 @@ onMounted(() => {
         }
 
         .red {
-            background-color: #c82736;
-            background-image: linear-gradient(165.72deg, #f7bdf8 21.15%, #cd237f 81.93%);
+            background-color: #0a0e26;
+            background-image:
+                radial-gradient(circle at 30% 40%, rgba(100, 150, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 70% 60%, rgba(150, 120, 255, 0.1) 0%, transparent 30%),
+                linear-gradient(165.72deg,
+                    #0d1330 21.15%,
+                    #1a2456 50%,
+                    #0c112b 81.93%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            svg {
+                // scale: 0.65;
+                flex-shrink: 0;
+                animation: twinkle 5s infinite;
+                transition: all 0.5s ease-in-out;
+            }
+
+            @keyframes twinkle {
+                0% {
+                    opacity: 1;
+                }
+
+                50% {
+                    opacity: 0.6;
+                }
+
+                100% {
+                    opacity: 1;
+                }
+            }
         }
 
         .purple {

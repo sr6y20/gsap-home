@@ -3,6 +3,7 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import svgLoader from 'vite-svg-loader'
 
 import AutoImport from 'unplugin-auto-import/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
@@ -14,6 +15,9 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
+    svgLoader({
+      defaultImport: 'component'
+    }),
     AutoImport({
       imports: [
         'vue',
