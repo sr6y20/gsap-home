@@ -29,7 +29,7 @@ const contentScreen = () => {
             trigger: ".link-container",
             pin: true,
             scrub: 0.1,
-            end: "+=3000",
+            end: "max",
             snap: {
                 snapTo: (rawProgress) => {
                     const page = rawProgress / step;
@@ -131,7 +131,6 @@ onMounted(() => {
         <div class="link-container">
 
             <section class="panel red">
-                <!-- <TimeLine /> -->
                 <MarsSun :style="{ scale: `${completeScale}` }" />
             </section>
 
@@ -179,6 +178,7 @@ onMounted(() => {
                 flex-shrink: 0;
                 animation: twinkle 5s infinite;
                 transition: all 0.5s ease-in-out;
+                position: relative;
             }
 
             @keyframes twinkle {

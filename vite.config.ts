@@ -55,6 +55,7 @@ export default defineConfig({
             },
           },
         ],
+        maximumFileSizeToCacheInBytes: 1024 * 1024 * 4
       },
       manifest: {
         name: 'Welcome to Sr6y20',

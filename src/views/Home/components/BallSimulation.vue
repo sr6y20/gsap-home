@@ -25,7 +25,6 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue';
-import { useMessage } from 'naive-ui'
 
 interface Ball {
     x: number;
@@ -40,15 +39,15 @@ interface Ball {
 }
 
 const BALL_COUNT = 5;
-const RADIUS = 50; // 100px 宽高的一半
+const RADIUS = 50;
 const GRAVITY = 0.5;
-const FRICTION = 0.96;
-const BOUNCE = 0.8;
-const IMPACT_SCALE = 0.3;
+const FRICTION = 0.9;
+const BOUNCE = 0.7;
+const AIR_RESISTANCE = 0.98;
+const GROUND_FRICTION = 0.96;
 const THROW_SCALE = 0.02;
 const gravityX = ref(0);
 const gravityY = ref(GRAVITY);
-const message = useMessage()
 const dialogIndex = ref(0)
 
 const ballRotate = ref(90);
@@ -87,17 +86,18 @@ const ballData = [
     }
 ]
 
-const balls = reactive<Ball[]>([]);
 const showModal = ref(false);
 
-function randomPosition() {
+const balls = reactive<Ball[]>([]);
+
+const randomPosition = () => {
     return {
         x: Math.random() * (window.innerWidth - RADIUS * 2),
         y: Math.random() * (window.innerHeight - RADIUS * 2),
     };
 }
 
-function createBalls() {
+const createBalls = () => {
     balls.length = 0;
     for (let i = 0; i < BALL_COUNT; i++) {
         const pos = randomPosition();
@@ -115,7 +115,7 @@ function createBalls() {
     }
 }
 
-function startDrag(e: MouseEvent, ball: Ball) {
+const startDrag = (e: MouseEvent, ball: Ball) => {
     e.preventDefault();
     let isDragging = true;
     let dragMoved = false;
@@ -130,7 +130,6 @@ function startDrag(e: MouseEvent, ball: Ball) {
 
     function onMouseMove(e: MouseEvent) {
         if (!isDragging) return;
-
         const moveX = e.clientX - startX;
         const moveY = e.clientY - startY;
         if (!dragMoved && (Math.abs(moveX) > dragThreshold || Math.abs(moveY) > dragThreshold)) {
@@ -140,7 +139,6 @@ function startDrag(e: MouseEvent, ball: Ball) {
         if (dragMoved) {
             ball.x = e.clientX - offsetX;
             ball.y = e.clientY - offsetY;
-
             ball.lastPositions.push({ x: ball.x, y: ball.y, time: Date.now() });
             if (ball.lastPositions.length > 5) {
                 ball.lastPositions.shift();
@@ -148,7 +146,7 @@ function startDrag(e: MouseEvent, ball: Ball) {
         }
     }
 
-    function onMouseUp(e: MouseEvent) {
+    function onMouseUp() {
         if (!isDragging) return;
         isDragging = false;
         ball.isDragging = false;
@@ -156,14 +154,12 @@ function startDrag(e: MouseEvent, ball: Ball) {
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
 
-        if (dragMoved) {
-            if (ball.lastPositions.length >= 2) {
-                const first = ball.lastPositions[0];
-                const last = ball.lastPositions[ball.lastPositions.length - 1];
-                const dt = (last.time - first.time) / 1000 || 0.01;
-                ball.vx = ((last.x - first.x) / dt) * THROW_SCALE;
-                ball.vy = ((last.y - first.y) / dt) * THROW_SCALE;
-            }
+        if (dragMoved && ball.lastPositions.length >= 2) {
+            const first = ball.lastPositions[0];
+            const last = ball.lastPositions[ball.lastPositions.length - 1];
+            const dt = (last.time - first.time) / 1000 || 0.01;
+            ball.vx = ((last.x - first.x) / dt) * THROW_SCALE;
+            ball.vy = ((last.y - first.y) / dt) * THROW_SCALE;
         } else {
             onClickHandler(ball.index);
         }
@@ -173,9 +169,8 @@ function startDrag(e: MouseEvent, ball: Ball) {
     document.addEventListener('mouseup', onMouseUp);
 }
 
-function startTouchDrag(e: TouchEvent, ball: Ball) {
-    e.preventDefault();  // 仅用于 touchstart 中
-
+const startTouchDrag = (e: TouchEvent, ball: Ball) => {
+    e.preventDefault();
     if (e.touches.length !== 1) return;
     const touch = e.touches[0];
     let isDragging = true;
@@ -202,7 +197,6 @@ function startTouchDrag(e: TouchEvent, ball: Ball) {
         if (dragMoved) {
             ball.x = moveTouch.clientX - offsetX;
             ball.y = moveTouch.clientY - offsetY;
-
             ball.lastPositions.push({ x: ball.x, y: ball.y, time: Date.now() });
             if (ball.lastPositions.length > 5) {
                 ball.lastPositions.shift();
@@ -210,7 +204,7 @@ function startTouchDrag(e: TouchEvent, ball: Ball) {
         }
     }
 
-    function onTouchEnd(e: TouchEvent) {
+    function onTouchEnd() {
         if (!isDragging) return;
         isDragging = false;
         ball.isDragging = false;
@@ -219,14 +213,12 @@ function startTouchDrag(e: TouchEvent, ball: Ball) {
         document.removeEventListener('touchend', onTouchEnd);
         document.removeEventListener('touchcancel', onTouchEnd);
 
-        if (dragMoved) {
-            if (ball.lastPositions.length >= 2) {
-                const first = ball.lastPositions[0];
-                const last = ball.lastPositions[ball.lastPositions.length - 1];
-                const dt = (last.time - first.time) / 1000 || 0.01;
-                ball.vx = ((last.x - first.x) / dt) * THROW_SCALE;
-                ball.vy = ((last.y - first.y) / dt) * THROW_SCALE;
-            }
+        if (dragMoved && ball.lastPositions.length >= 2) {
+            const first = ball.lastPositions[0];
+            const last = ball.lastPositions[ball.lastPositions.length - 1];
+            const dt = (last.time - first.time) / 1000 || 0.01;
+            ball.vx = ((last.x - first.x) / dt) * THROW_SCALE;
+            ball.vy = ((last.y - first.y) / dt) * THROW_SCALE;
         } else {
             onClickHandler(ball.index);
         }
@@ -237,38 +229,47 @@ function startTouchDrag(e: TouchEvent, ball: Ball) {
     document.addEventListener('touchcancel', onTouchEnd);
 }
 
-function onClickHandler(index: number) {
+const onClickHandler = (index: number) => {
     dialogIndex.value = index;
     showModal.value = true;
 }
 
-function resolveBallCollision(b1: Ball, b2: Ball) {
+const resolveBallCollision = (b1: Ball, b2: Ball) => {
     const dx = b2.x - b1.x;
     const dy = b2.y - b1.y;
     const dist = Math.sqrt(dx * dx + dy * dy);
-    const minDist = b1.radius * 2;
+    const minDist = b1.radius + b2.radius;
 
-    if (dist < minDist && dist !== 0) {
-        const overlap = (minDist - dist) / 2;
-        const ux = dx / dist;
-        const uy = dy / dist;
+    if (dist < minDist && dist > 0) {
+        const overlap = 0.5 * (minDist - dist);
+        const nx = dx / dist;
+        const ny = dy / dist;
 
-        b1.x -= ux * overlap;
-        b1.y -= uy * overlap;
-        b2.x += ux * overlap;
-        b2.y += uy * overlap;
+        b1.x -= overlap * nx;
+        b1.y -= overlap * ny;
+        b2.x += overlap * nx;
+        b2.y += overlap * ny;
 
-        const vxTotal = b1.vx - b2.vx;
-        const vyTotal = b1.vy - b2.vy;
+        const tx = -ny;
+        const ty = nx;
 
-        b1.vx -= vxTotal * ux * IMPACT_SCALE;
-        b1.vy -= vyTotal * uy * IMPACT_SCALE;
-        b2.vx += vxTotal * ux * IMPACT_SCALE;
-        b2.vy += vyTotal * uy * IMPACT_SCALE;
+        const dpTan1 = b1.vx * tx + b1.vy * ty;
+        const dpTan2 = b2.vx * tx + b2.vy * ty;
+
+        const dpNorm1 = b1.vx * nx + b1.vy * ny;
+        const dpNorm2 = b2.vx * nx + b2.vy * ny;
+
+        const m1 = dpNorm2;
+        const m2 = dpNorm1;
+
+        b1.vx = tx * dpTan1 + nx * m1;
+        b1.vy = ty * dpTan1 + ny * m1;
+        b2.vx = tx * dpTan2 + nx * m2;
+        b2.vy = ty * dpTan2 + ny * m2;
     }
 }
 
-function animate() {
+const animate = () => {
     balls.forEach((ball) => {
         if (!ball.isDragging) {
             ball.vx += gravityX.value;
@@ -293,11 +294,22 @@ function animate() {
                 ball.vy *= -FRICTION;
             } else if (ball.y > maxY) {
                 ball.y = maxY;
-                ball.vy *= -BOUNCE;
+
+                if (Math.abs(ball.vy) < 1) {
+                    ball.vy = 0;
+                } else {
+                    ball.vy *= -BOUNCE;
+                }
+
+                ball.vx *= GROUND_FRICTION;
+
+                if (Math.abs(ball.vx) < 0.05) {
+                    ball.vx = 0;
+                }
             }
 
-            ball.vx *= 0.99;
-            ball.vy *= 0.99;
+            ball.vx *= AIR_RESISTANCE;
+            ball.vy *= AIR_RESISTANCE;
         }
     });
 
@@ -310,7 +322,7 @@ function animate() {
     requestAnimationFrame(animate);
 }
 
-function onResize() {
+const onResize = () => {
     balls.forEach((ball) => {
         const maxX = window.innerWidth - ball.radius * 2;
         const maxY = window.innerHeight - ball.radius * 2;
@@ -319,7 +331,7 @@ function onResize() {
     });
 }
 
-function handleDeviceOrientation(event: DeviceOrientationEvent) {
+const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
     if (event.beta == null || event.gamma == null) return;
 
     const maxTilt = 90;
@@ -364,13 +376,11 @@ onMounted(() => {
                 return;
             }
             if (entry.isIntersecting) {
-                // message.success("Element is in view")
                 window.addEventListener('resize', onResize);
                 if (window.DeviceOrientationEvent) {
                     window.addEventListener('deviceorientation', handleDeviceOrientation);
                 }
             } else {
-                // message.success("Element is out of view")
                 window.removeEventListener('resize', onResize);
                 if (window.DeviceOrientationEvent) {
                     window.removeEventListener('deviceorientation', handleDeviceOrientation);
