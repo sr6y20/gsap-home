@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { onMounted, ref, useTemplateRef } from "vue";
+import { defineAsyncComponent, onMounted, ref, useTemplateRef } from "vue";
 
 import Loading from "@/components/Loading.vue";
 import ParallaxPlot from '@/views/Home/components/ParallaxPlot.vue';
 import FlowerColor from "@/views/Home/components/FlowerColor.vue";
 import FoxGLTF from "@/views/Home/components/FoxGLTF.vue";
-import Contact from "@/views/Home/components/Contact.vue";
-import BallSimulation from "./components/BallSimulation.vue";
-import TimeLine from "./components/TimeLine.vue";
-import MarsSun from '@/assets/svgs/MarsSun.svg'
+const Contact = defineAsyncComponent(() => import("@/views/Home/components/Contact.vue"));
+const BallSimulation = defineAsyncComponent(() => import("./components/BallSimulation.vue"));
+const MarsSun = defineAsyncComponent(() => import('@/assets/svgs/MarsSun.svg'));
 
 gsap.registerPlugin(ScrollTrigger);
 

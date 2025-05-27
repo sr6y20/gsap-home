@@ -6,8 +6,7 @@ import './assets/icons/iconfont.js'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import { createDiscreteApi } from 'naive-ui'
-
+import autolog from "autolog.js";
 import App from './App.vue'
 import router from './router'
 
@@ -17,10 +16,9 @@ app.use(createPinia()).use(router)
 
 app.mount('#app')
 
-const { message } = createDiscreteApi(['message'])
 // PWA
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.addEventListener('controllerchange', () => {
-        message.success("站点已更新，刷新后生效");
+        autolog.log("站点已更新，刷新后生效", "success", 3000);
     })
 }
