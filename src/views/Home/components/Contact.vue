@@ -2,37 +2,25 @@
 import { gsap } from "gsap";
 import { onMounted, useTemplateRef } from "vue";
 import Marquee from "./Marquee.vue";
+import PixeledLoader from "./PixeledLoader.vue";
+
 
 const contactRef = useTemplateRef('contact');
 
-const links = [{
-    name: 'EMAIL',
-    icon: '#icon-QQyouxiang',
-    link: 'mailto:sr6y20@foxmail.com'
-}, {
-    name: 'BILIBILI',
-    icon: '#icon-bilibili',
-    link: 'https://space.bilibili.com/484923273'
-}, {
-    name: 'GITHUB',
-    icon: '#icon-github',
-    link: 'https://github.com/sr6y20'
-}, {
-    name: 'GITEE',
-    icon: '#icon-gitee',
-    link: 'https://gitee.com/sr6y20'
-}, {
-    name: 'QQ',
-    icon: '#icon-QQ',
-    link: 'https://res.abeim.cn/api/qq/?qq=1836165455'
-}]
+let tl: gsap.core.Timeline, tl2: gsap.core.Timeline;
 
-const onLinkClick = (link: string) => {
-    window.open(link, '_blank')
+const textAnimate = (event: DeviceOrientationEvent) => {
+    tl.pause()
+    tl2.pause()
+    gsap.to([tl, tl2], {
+        duration: 2,
+        ease: 'power4',
+        progress: (innerWidth / 2 - (event.gamma!) * 10) / innerWidth
+    })
 }
 
-onMounted(() => {
-    const tl = gsap.timeline({
+const initTimeLine = () => {
+    tl = gsap.timeline({
         defaults: {
             duration: 2,
             yoyo: true,
@@ -52,8 +40,7 @@ onMounted(() => {
         .play(.5)
 
 
-
-    const tl2 = gsap.timeline()
+    tl2 = gsap.timeline()
 
     document.querySelectorAll('text').forEach((t, i) => {
         tl2.add(
@@ -68,39 +55,43 @@ onMounted(() => {
             })
             , i % 3 * 0.2)
     })
+}
 
-    contactRef.value!.onpointermove = (e) => {
-        tl.pause()
-        tl2.pause()
-        gsap.to([tl, tl2], {
-            duration: 2,
-            ease: 'power4',
-            progress: e.x / innerWidth
-        })
-    }
-
-
-    const textAnimate = (event: DeviceOrientationEvent) => {
-        tl.pause()
-        tl2.pause()
-        gsap.to([tl, tl2], {
-            duration: 2,
-            ease: 'power4',
-            progress: (innerWidth / 2 - (event.gamma!) * 10) / innerWidth
-        })
-    }
+const createObserve = () => {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                if (window.DeviceOrientationEvent)
+                if (window.DeviceOrientationEvent) {
+                    // 手机传感器移动
                     window.addEventListener('deviceorientation', textAnimate);
+                } else {
+                    // 电脑鼠标移动
+                    contactRef.value!.onpointermove = (e) => {
+                        tl.pause()
+                        tl2.pause()
+                        gsap.to([tl, tl2], {
+                            duration: 2,
+                            ease: 'power4',
+                            progress: e.x / innerWidth
+                        })
+                    }
+                }
             } else {
-                if (window.DeviceOrientationEvent)
+                if (window.DeviceOrientationEvent) {
                     window.removeEventListener('deviceorientation', textAnimate);
+                } else {
+                    contactRef.value!.onpointermove = null;
+                }
             }
         });
     });
     observer.observe(document.querySelector('.contact') as Element);
+}
+
+onMounted(() => {
+    initTimeLine();
+    createObserve();
+
 })
 
 </script>
@@ -128,6 +119,7 @@ onMounted(() => {
             </g>
         </svg>
 
+        <!-- <PixeledLoader /> -->
         <Marquee />
 
     </div>
@@ -142,14 +134,12 @@ onMounted(() => {
     background: #000;
     overflow: hidden;
     color: white;
+    position: relative;
 
     .big-text {
         width: 100%;
         height: 70vh;
         margin-top: 100px;
     }
-
-
-
 }
 </style>
